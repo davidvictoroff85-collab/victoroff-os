@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://victoroffgroup.com/contracts/publication-receipt.v1.schema.json",
+  "title": "Publication ingestion receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "packageId", "revision", "status", "receivedAt", "retainedRevision"],
+  "properties": {
+    "schemaVersion": { "const": "publication-receipt.v1" },
+    "receiptId": { "type": "string", "minLength": 1 },
+    "packageId": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 1 },
+    "status": { "enum": ["accepted", "quarantined", "withdrawn"] },
+    "reason": { "type": "string" },
+    "receivedAt": { "type": "string", "format": "date-time" },
+    "retainedRevision": { "type": ["integer", "null"], "minimum": 1 }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@victoroff/fixtures",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./actions.json": "./src/actions.json"
+  },
+  "dependencies": {
+    "@victoroff/contracts": "workspace:*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json"
+  }
+}

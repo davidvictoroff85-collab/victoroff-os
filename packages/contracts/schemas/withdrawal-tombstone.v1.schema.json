@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://victoroffgroup.com/contracts/withdrawal-tombstone.v1.schema.json",
+  "title": "Signed withdrawal tombstone",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "tombstoneId", "targetPackageId", "targetRevision", "reasonCode", "issuedAt", "signature"],
+  "properties": {
+    "schemaVersion": { "const": "withdrawal-tombstone.v1" },
+    "tombstoneId": { "type": "string", "minLength": 1 },
+    "targetPackageId": { "type": "string", "minLength": 1 },
+    "targetRevision": { "type": "integer", "minimum": 1 },
+    "reasonCode": { "enum": ["superseded", "rights-revoked", "source-withdrawn", "safety-correction"] },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "signature": { "type": "string", "minLength": 1 }
+  }
+}

@@ -1,0 +1,170 @@
+[
+  {
+    "schemaVersion": "shareholder-action.v1",
+    "id": "distribution-records",
+    "title": "Distribution and shareholder records",
+    "shortLabel": "Distribution / records",
+    "audience": "BBNC shareholders checking the next distribution or updating address and banking records.",
+    "rule": "Shareholders on record by August 15, 2026 are scheduled to receive the September 4, 2026 distribution.",
+    "deadline": "Update address or banking information before the August 15, 2026 record date.",
+    "preparation": [
+      "Confirm your current mailing address and banking details before leaving this concept.",
+      "Have your myBBNC sign-in method ready; do not enter it here.",
+      "Use Shareholder Services if an online record cannot be corrected."
+    ],
+    "ownerSystem": "myBBNC shareholder portal",
+    "handoff": {
+      "label": "Continue to myBBNC",
+      "url": "https://mybbnc.net/home",
+      "external": true
+    },
+    "fallback": "BBNC Shareholder Services: shareholders@bbnc.net or 907-278-3602.",
+    "source": {
+      "owner": "Bristol Bay Native Corporation",
+      "url": "https://www.bbnc.net/event/bbnc-settlement-trust-distribution-14/"
+    },
+    "reviewedAt": "2026-07-21",
+    "expiresAt": "2026-09-05",
+    "classification": "public"
+  },
+  {
+    "schemaVersion": "shareholder-action.v1",
+    "id": "forms-stock-wills",
+    "title": "Shareholder forms and stock wills",
+    "shortLabel": "Forms / stock wills",
+    "audience": "BBNC shareholders who need a form, stock will, address change, direct deposit, gift-of-stock, estate, or probate service.",
+    "rule": "Form requirements vary by request; BBNC directs shareholders to its Shareholder Forms service and myBBNC portal.",
+    "deadline": "There is no single deadline. Follow the date and notarization rules on the form you select.",
+    "preparation": [
+      "Name the change or service you need before opening the forms library.",
+      "Gather only the supporting documents listed by the official form.",
+      "Contact Shareholder Services before sending anything you are unsure about."
+    ],
+    "ownerSystem": "myBBNC forms and BBNC Shareholder Services",
+    "handoff": {
+      "label": "Open Shareholder Forms in myBBNC",
+      "url": "https://mybbnc.net/home",
+      "external": true
+    },
+    "fallback": "BBNC Shareholder Services: 907-278-3602 or 800-426-3602 toll free.",
+    "source": {
+      "owner": "Bristol Bay Native Corporation",
+      "url": "https://www.bbnc.net/for-shareholders/shareholder-services/"
+    },
+    "reviewedAt": "2026-07-21",
+    "expiresAt": "2026-08-21",
+    "classification": "public"
+  },
+  {
+    "schemaVersion": "shareholder-action.v1",
+    "id": "descendant-enrollment",
+    "title": "Descendant and missed-enrollee applications",
+    "shortLabel": "Descendant enrollment",
+    "audience": "Eligible lineal descendants of original BBNC shareholders and eligible people who missed original enrollment.",
+    "rule": "Class D applicants must be lineal descendants born after December 18, 1971 and not enrolled with descendant stock in another regional Alaska Native corporation. Separate Class C missed-enrollee rules apply.",
+    "deadline": "Applications are open. BBNC currently publishes no closing date on the enrollment page.",
+    "preparation": [
+      "Class D: birth certificate showing the lineal relationship and Social Security card.",
+      "For a minor: the child’s documents and a signed, notarized custodial consent form.",
+      "Class C: birth certificate, Social Security card, and Certificate of Indian Blood."
+    ],
+    "ownerSystem": "BBNC Enrollment through myBBNC",
+    "handoff": {
+      "label": "Continue to myBBNC Enrollment",
+      "url": "https://mybbnc.net/home",
+      "external": true
+    },
+    "fallback": "BBNC Enrollment: descendants@bbnc.net or 907-278-3602; paper applications are available on request.",
+    "source": {
+      "owner": "Bristol Bay Native Corporation",
+      "url": "https://www.bbnc.net/de/"
+    },
+    "reviewedAt": "2026-07-21",
+    "expiresAt": "2026-08-21",
+    "classification": "public"
+  },
+  {
+    "schemaVersion": "shareholder-action.v1",
+    "id": "jobs-training-scholarships",
+    "title": "Jobs, training, and scholarships",
+    "shortLabel": "Jobs / training / scholarships",
+    "audience": "BBNC shareholders, spouses, and descendants looking for employment, training, internships, or education support.",
+    "rule": "Eligibility and dates are program-specific. BBNC publishes current training and development routes and directs scholarship seekers to the Bristol Bay Foundation.",
+    "deadline": "Check the live opportunity before preparing an application; there is no single portfolio-wide deadline.",
+    "preparation": [
+      "Identify whether you need a job, skills training, internship, or education funding.",
+      "Prepare a current resume or Talent Bank profile when the program requests one.",
+      "Confirm shareholder, spouse, descendant, age, and program-specific eligibility."
+    ],
+    "ownerSystem": "BBNC Shareholder Development and Bristol Bay Foundation",
+    "handoff": {
+      "label": "Review current training and development routes",
+      "url": "https://www.bbnc.net/for-shareholders/training-development/",
+      "external": true
+    },
+    "fallback": "BBNC Shareholder Development: call 907-278-3602 and ask for the program owner.",
+    "source": {
+      "owner": "Bristol Bay Native Corporation",
+      "url": "https://www.bbnc.net/for-shareholders/training-development/"
+    },
+    "reviewedAt": "2026-07-21",
+    "expiresAt": "2026-08-21",
+    "classification": "public"
+  },
+  {
+    "schemaVersion": "shareholder-action.v1",
+    "id": "voting",
+    "title": "Proxy, ballot, and annual meeting",
+    "shortLabel": "Voting",
+    "audience": "BBNC shareholders preparing to vote a proxy or ballot or attend the 2026 annual meeting.",
+    "rule": "Completed proxies must reach Hutchings & Associates by September 30, 2026 at 5:00 p.m. Alaska time. Separate day-of-meeting ballot windows apply on October 3.",
+    "deadline": "Proxy deadline: September 30, 2026 at 5:00 p.m. Alaska time. Annual meeting: October 3, 2026.",
+    "preparation": [
+      "Locate the PIN from the mailed or emailed proxy material.",
+      "Have the last four digits of your Social Security number ready for BBNCVote only.",
+      "If the PIN is missing, use the official PIN lookup or contact the election certifier."
+    ],
+    "ownerSystem": "BBNCVote and Hutchings & Associates",
+    "handoff": {
+      "label": "Continue to BBNCVote",
+      "url": "https://www.bbncvote.net/",
+      "external": true
+    },
+    "fallback": "Election certifier Hutchings & Associates: 907-563-2727, extension 1.",
+    "source": {
+      "owner": "Bristol Bay Native Corporation",
+      "url": "https://www.bbnc.net/event/2026-bbnc-annual-meeting-of-shareholders/"
+    },
+    "reviewedAt": "2026-07-21",
+    "expiresAt": "2026-10-04",
+    "classification": "public"
+  },
+  {
+    "schemaVersion": "shareholder-action.v1",
+    "id": "local-assistance",
+    "title": "Local and human assistance",
+    "shortLabel": "Local assistance",
+    "audience": "Shareholders and family members who want help from a person with applications, forms, or community resources.",
+    "rule": "BBNC lists Village Resource Specialists in Naknek, New Stuyahok, Nondalton, and Togiak and provides central Shareholder Services by phone.",
+    "deadline": "No single deadline. Contact the department early when another task has a due date.",
+    "preparation": [
+      "Write down the task, deadline, and the point where you are stuck.",
+      "Bring only the documents the specialist asks for.",
+      "Do not send sensitive records to this concept site."
+    ],
+    "ownerSystem": "BBNC Shareholder Services and Village Resource Specialists",
+    "handoff": {
+      "label": "Open BBNC Shareholder Services",
+      "url": "https://www.bbnc.net/for-shareholders/shareholder-services/",
+      "external": true
+    },
+    "fallback": "BBNC Shareholder Services: 907-278-3602 or 800-426-3602 toll free.",
+    "source": {
+      "owner": "Bristol Bay Native Corporation",
+      "url": "https://www.bbnc.net/for-shareholders/shareholder-services/"
+    },
+    "reviewedAt": "2026-07-21",
+    "expiresAt": "2026-08-21",
+    "classification": "public"
+  }
+]

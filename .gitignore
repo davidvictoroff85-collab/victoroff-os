@@ -3,3 +3,10 @@
 node_modules/
 screenshots/
 .vercel
+dist/
+apps/*/dist/
+packages/*/dist/
+test-results/
+playwright-report/
+coverage/
+.env*

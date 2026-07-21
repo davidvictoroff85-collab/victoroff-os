@@ -1,10 +1,29 @@
 {
   "name": "victoroff-os",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Governed authority-to-outcome operating system concept",
+  "description": "A public-safe shareholder action center and governed publication system",
+  "type": "module",
+  "packageManager": "pnpm@10.34.4",
+  "engines": {
+    "node": ">=22 <27"
+  },
   "scripts": {
-    "dev": "python3 -m http.server 4173",
-    "verify": "python3 scripts/verify.py"
+    "dev": "pnpm --filter @victoroff/site dev",
+    "lint": "node scripts/lint.mjs",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "vitest run",
+    "test:a11y": "playwright test --config=playwright.a11y.config.ts",
+    "test:e2e": "playwright test --config=playwright.config.ts",
+    "build": "pnpm -r --if-present build && node scripts/stage-site.mjs",
+    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:a11y && pnpm test:e2e && pnpm build"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "@playwright/test": "1.54.1",
+    "@types/node": "24.1.0",
+    "typescript": "5.8.3",
+    "vite": "7.0.6",
+    "vitest": "3.2.4"
   }
 }

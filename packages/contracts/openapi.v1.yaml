@@ -1,0 +1,56 @@
+openapi: 3.1.0
+info:
+  title: BBNC Stewardship internal command API
+  version: 1.0.0
+  description: Internal, default-deny command surface. It is not consumed by the public site.
+servers:
+  - url: /api/v1
+paths:
+  /initiatives/{initiativeId}/commands/transition:
+    post:
+      operationId: transitionInitiative
+      parameters:
+        - in: path
+          name: initiativeId
+          required: true
+          schema: { type: string }
+        - in: header
+          name: Idempotency-Key
+          required: true
+          schema: { type: string, minLength: 16 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [command, expectedRevision, authorityId]
+              properties:
+                command: { enum: [submit, request_changes, approve, release, withdraw] }
+                expectedRevision: { type: integer, minimum: 1 }
+                authorityId: { type: string, minLength: 1 }
+      responses:
+        "202":
+          description: Command accepted with an audit event.
+        "401": { description: Identity unavailable. }
+        "403": { description: Effective authority or separation-of-duty check failed. }
+        "409": { description: Revision, lifecycle, or idempotency conflict. }
+  /publication/packages/{packageId}/receipts:
+    get:
+      operationId: listPublicationReceipts
+      parameters:
+        - in: path
+          name: packageId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Atomic ingestion and quarantine receipts.
+components:
+  securitySchemes:
+    internalSession:
+      type: openIdConnect
+      openIdConnectUrl: https://authority.invalid/.well-known/openid-configuration
+security:
+  - internalSession: []

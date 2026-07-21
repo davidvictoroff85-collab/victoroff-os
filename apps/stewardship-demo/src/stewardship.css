@@ -1,0 +1,203 @@
+body {
+  min-width: 18rem;
+}
+
+.demo-gate {
+  display: flex;
+  min-height: 100svh;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 8vw, 8rem);
+  color: var(--white);
+  background: var(--black);
+}
+
+.demo-gate h1,
+.queue-heading h1 {
+  max-width: 11ch;
+  margin: 2rem 0;
+  font-size: clamp(3.6rem, 9vw, 8.5rem);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  line-height: 0.88;
+}
+
+.demo-gate > p:not(.eyebrow) {
+  max-width: 40rem;
+  font-size: 1.1rem;
+  line-height: 1.55;
+}
+
+.demo-gate .button {
+  margin-top: 1.5rem;
+  color: var(--black);
+  background: var(--white);
+  cursor: pointer;
+}
+
+.workspace > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1rem 1.5rem;
+  color: var(--white);
+  background: var(--black);
+  border-bottom: 1px solid var(--white);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.workspace > header a {
+  text-decoration: none;
+}
+
+.workspace > header p {
+  margin: 0;
+}
+
+.workspace main {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  min-height: calc(100svh - 3rem);
+}
+
+.workspace aside {
+  padding: 2rem 1.5rem;
+  color: var(--white);
+  background: var(--black);
+  border-right: 1px solid var(--white);
+}
+
+.workspace nav {
+  margin-top: 2rem;
+  border-top: 1px solid var(--white);
+}
+
+.workspace nav button {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 1rem 0;
+  color: var(--white);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--white);
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.workspace nav button[aria-current="page"] {
+  color: var(--black);
+  background: var(--white);
+  padding-inline: 0.7rem;
+}
+
+.boundary {
+  margin-top: 3rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  line-height: 1.55;
+}
+
+.queue {
+  padding: clamp(2rem, 5vw, 5rem);
+}
+
+.queue-heading {
+  display: grid;
+  grid-template-columns: 1fr 18rem;
+  gap: 4rem;
+  align-items: end;
+}
+
+.queue-heading > p {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.records {
+  margin-top: 4rem;
+  border-top: 1px solid var(--black);
+  border-left: 1px solid var(--black);
+}
+
+.records article {
+  display: grid;
+  grid-template-columns: 8rem 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  min-height: 11rem;
+  padding: 1.5rem;
+  border-right: 1px solid var(--black);
+  border-bottom: 1px solid var(--black);
+}
+
+.record-id {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--black);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+}
+
+.record-main h2 {
+  margin: 0.8rem 0;
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.record-main p:last-child {
+  margin: 0;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+}
+
+.records .button {
+  color: var(--white);
+  background: var(--black);
+  cursor: pointer;
+}
+
+.audit {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--black);
+}
+
+.audit pre {
+  overflow: auto;
+  padding: 1.5rem;
+  color: var(--white);
+  background: var(--black);
+  font: 0.72rem/1.6 var(--mono);
+}
+
+@media (max-width: 800px) {
+  .workspace > header p,
+  .workspace aside {
+    display: none;
+  }
+
+  .workspace main,
+  .queue-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .records article {
+    grid-template-columns: 1fr;
+  }
+
+  .record-id {
+    height: auto;
+    flex-direction: row;
+    padding-bottom: 1rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--black);
+  }
+}

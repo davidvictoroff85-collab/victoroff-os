@@ -1,41 +1,69 @@
 # Victoroff OS
 
-Governed authority-to-outcome infrastructure for institutional work.
+> Every shareholder task. One clear next step.
 
-This repository is private and currently contains the first concept landing page. It does not
-assert client authority, commission, or production status.
+Victoroff OS is a private, uncommissioned product concept for a public-safe shareholder action
+center and a governed institutional publication system. It does not assert BBNC authority,
+affiliation, commission, production status, or permission to represent BBNC publicly.
 
-**Live concept:** <https://victoroff-os.vercel.app>
+**Live rollback:** <https://victoroff-os.vercel.app>
 
-## Run locally
+## Workspace
+
+| Surface | Purpose | Public deployment |
+|---|---|---|
+| `apps/site` | Anonymous Shareholder Action Center and product pitch | Yes |
+| `apps/stewardship-demo` | Synthetic staff workflow proof | No |
+| `packages/contracts` | OpenAPI 3.1 and JSON Schema contracts | Build artifact |
+| `packages/domain` | Authority, lifecycle, approval, release, and audit rules | Internal only |
+| `packages/publication` | Signing, verification, quarantine, receipts, and withdrawal | Internal only |
+| `packages/fixtures` | Verified public sources and synthetic demonstration records | Public subset only |
+| `packages/ui` | Shared accessible black-and-white primitives | Both apps |
+
+The public site can import contracts, public fixtures, and UI only. It cannot import internal
+domain or publication code. `vercel.json` stages only `apps/site` into the deployable output.
+
+## Run
 
 ```bash
-python3 -m http.server 4173
+pnpm install
+pnpm dev
 ```
 
-Open <http://localhost:4173>.
+The separate staff demonstration runs with:
+
+```bash
+pnpm --filter @victoroff/stewardship-demo dev
+```
 
 ## Verify
 
 ```bash
-python3 scripts/verify.py
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm test:a11y
+pnpm test:e2e
+pnpm build
 ```
 
-## Deploy
+`pnpm lint` is a release-policy gate. It rejects non-black/white CSS colors, gradients, shadows,
+external fonts, missing concept/noindex controls, expired source records, broken static handoffs,
+unclassified action content, and forbidden public-to-internal dependencies.
 
-```bash
-vercel --prod --yes
-```
+## Safety boundary
 
-The deployment intentionally emits `noindex, nofollow` until the product and public identity are
-approved.
+The concept stores no credentials, PII, uploads, applications, submissions, votes, cookies, local
+storage, analytics identifiers, or form data. myBBNC remains the authenticated shareholder record
+system. BBNCVote remains the voting system. Every external handoff is labeled and retains a human
+fallback.
 
-## Current receipts
+See [architecture](docs/architecture.md), [phase delivery](docs/phase-plan.md), and
+[ownership transfer](docs/ownership-transfer.md).
 
-- Initial page source: `799ca7f` on `organvm/victoroff-os` `main`
-- Production: Vercel deployment `dpl_9MT8gN1UWCjC9eq793F8izLi8aw5` (`READY`)
-- Access: `Victoroff OS Admins` has repository-admin permission; the requested email invite is
-  held at [issue #1](https://github.com/organvm/victoroff-os/issues/1) because the paid plan is at
-  2 of 2 seats.
-- Delivery automation: CLI deployment is verified; private-repo Git integration is owned by
-  [issue #2](https://github.com/organvm/victoroff-os/issues/2).
+## Existing remote receipts
+
+- Initial live source: `799ca7f` on `organvm/victoroff-os` `main`.
+- Rollback deployment: `dpl_9MT8gN1UWCjC9eq793F8izLi8aw5` (`READY`).
+- Organization transfer and member-admin gate: [issue #3](https://github.com/organvm/victoroff-os/issues/3).
+- Private-repo Vercel Git integration gate: [issue #2](https://github.com/organvm/victoroff-os/issues/2).

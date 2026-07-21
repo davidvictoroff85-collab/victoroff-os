@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://victoroffgroup.com/contracts/publication-package.v1.schema.json",
+  "title": "Signed publication package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "packageId", "revision", "publishedAt", "expiresAt", "classification", "content", "assets", "signature"],
+  "properties": {
+    "schemaVersion": { "const": "publication-package.v1" },
+    "packageId": { "type": "string", "minLength": 1 },
+    "revision": { "type": "integer", "minimum": 1 },
+    "publishedAt": { "type": "string", "format": "date-time" },
+    "expiresAt": { "type": "string", "format": "date-time" },
+    "classification": { "const": "public" },
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actions"],
+      "properties": {
+        "actions": { "type": "array", "items": { "$ref": "shareholder-action.v1.schema.json" } }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "classification"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "classification": { "const": "public" }
+        }
+      }
+    },
+    "signature": { "type": "string", "minLength": 1 }
+  }
+}
