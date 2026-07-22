@@ -1,0 +1,79 @@
+{
+  "schema_version": "victoroff.pr-reconciliation.v1",
+  "repository": "organvm/victoroff-os",
+  "pull_request": 11,
+  "url": "https://github.com/organvm/victoroff-os/pull/11",
+  "owner": "4444J99",
+  "state": "owner_action_required_after_control_merge",
+  "base": {
+    "branch": "main",
+    "sha": "28c797907050827c16044baa63d7c63fe9c94f25"
+  },
+  "head": {
+    "branch": "agent/victoroff-final-pitch-status",
+    "sha": "b2f30038611b16e33c488a1fa701de9599c05cce"
+  },
+  "checks_at_audit": [
+    "verify:success",
+    "CodeQL:success",
+    "Analyze-actions:success",
+    "Analyze-javascript-typescript:success",
+    "CodeRabbit:skipped-draft"
+  ],
+  "dependency": "control-main-green",
+  "integration_packet": "VIC-PR11-INTEGRATE",
+  "source_claim": {
+    "graph": "bbnc-delivery-55-v1",
+    "checkpoint_total": 55,
+    "provisional_claim_total": 12,
+    "credit_state": "provisional_pending_checkpoint_predicates"
+  },
+  "conflicts": [
+    "Phases and Outcomes appear in ordinary primary navigation",
+    "12, 55, 22 percent, and phase totals are duplicated literals",
+    "verified labels do not carry checkpoint-level exact-revision receipts",
+    "the BBNC exemplar denominator is presented as though it were the whole additive program",
+    "legacy phase titles drift from the current program registry"
+  ],
+  "files": [
+    {
+      "path": "apps/site/index.html",
+      "diffstat": "+206/-2",
+      "disposition": "adapt_in_owner_pr",
+      "preserve": [
+        "outcome privacy boundary",
+        "accessible progress semantics",
+        "Concept plus Phase 0-9 evidence as the named BBNC subgraph"
+      ],
+      "required_change": "remove delivery evidence from primary navigation and render all counts from a validated static registry projection"
+    },
+    {
+      "path": "apps/site/src/site.css",
+      "diffstat": "+313/-4",
+      "disposition": "preserve_in_owner_pr",
+      "preserve": [
+        "black-and-white progress styling",
+        "responsive phase layout",
+        "outcome-boundary presentation"
+      ],
+      "required_change": "scope the styles to the secondary proof surface selected by the integration packet"
+    },
+    {
+      "path": "tests/e2e/action-center.spec.ts",
+      "diffstat": "+25/-0",
+      "disposition": "adapt_in_owner_pr",
+      "preserve": [
+        "aggregate equals component totals invariant",
+        "no-telemetry and no-vendor-extraction assertions"
+      ],
+      "required_change": "assert registry-derived values and the absence of delivery links from primary navigation"
+    }
+  ],
+  "owner_rules": {
+    "overwrite_owner_branch": false,
+    "force_push": false,
+    "close_before_patch_equivalence": false
+  },
+  "predicate": "pnpm verify:scoped",
+  "receipt_target": "https://github.com/organvm/victoroff-os/pull/11"
+}

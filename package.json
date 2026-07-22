@@ -9,17 +9,24 @@
     "node": "24.x"
   },
   "scripts": {
+    "check:registry": "node scripts/control/validate-program-registry.mjs",
+    "check:navigation": "node scripts/control/check-primary-navigation.mjs",
+    "check:reconciliation": "node scripts/control/validate-pr-reconciliation.mjs",
+    "check:continuation": "node scripts/control/validate-continuation.mjs",
     "cloudflare:deploy": "wrangler deploy",
     "cloudflare:dry-run": "pnpm build && wrangler deploy --dry-run",
     "cloudflare:preview": "wrangler versions upload",
     "dev": "pnpm --filter @victoroff/site dev",
     "lint": "node scripts/lint.mjs",
+    "test:control": "node --test tests/control/*.test.mjs",
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "vitest run",
     "test:a11y": "playwright test --config=playwright.a11y.config.ts",
     "test:e2e": "playwright test --config=playwright.config.ts",
     "build": "pnpm -r --if-present build && node scripts/stage-site.mjs",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:a11y && pnpm test:e2e && pnpm build"
+    "verify:control": "pnpm check:registry && pnpm check:navigation && pnpm check:reconciliation && pnpm check:continuation && pnpm test:control",
+    "verify:scoped": "node scripts/control/verify-scoped.mjs",
+    "verify": "pnpm verify:control && pnpm lint && pnpm typecheck && pnpm test && pnpm test:a11y && pnpm test:e2e && pnpm build"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.2",

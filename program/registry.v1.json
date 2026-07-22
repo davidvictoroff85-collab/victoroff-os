@@ -1,0 +1,432 @@
+{
+  "schema_version": "victoroff.program-registry.v1",
+  "program_id": "victoroff",
+  "governing_ux_rule": "complex governance underneath; simple actions on top",
+  "authority": {
+    "mode": "uncommissioned_synthetic_only",
+    "real_bbnc_data_allowed": false,
+    "real_bbnc_identity_allowed": false,
+    "representation_allowed": false,
+    "holds": [
+      {
+        "id": "victoroff-custody-hold",
+        "source": "https://github.com/organvm/victoroff-os/issues/3",
+        "blocks": [
+          "organization_creation",
+          "repository_transfer",
+          "collaborator_changes",
+          "github_app_installation",
+          "remote_rewrite",
+          "commercial_repository_creation"
+        ]
+      },
+      {
+        "id": "victoroff-production-hold",
+        "source": "https://github.com/organvm/victoroff-os/issues/2",
+        "blocks": [
+          "dns_change",
+          "production_promotion",
+          "deployment_change",
+          "infrastructure_transfer"
+        ]
+      }
+    ]
+  },
+  "actions": [
+    { "id": "start", "label": "Start" },
+    { "id": "decide", "label": "Decide" },
+    { "id": "build", "label": "Build" },
+    { "id": "release", "label": "Release" },
+    { "id": "find-rule", "label": "Find a Rule" },
+    { "id": "see-status", "label": "See What's Happening" },
+    { "id": "understand", "label": "Understand Victoroff" }
+  ],
+  "programs": [
+    {
+      "id": "victoroff-os",
+      "name": "Victoroff OS",
+      "repository": "organvm/victoroff-os",
+      "visibility": "private",
+      "state": "active_synthetic",
+      "surfaces": [
+        "apps/site",
+        "apps/os",
+        "services/api",
+        "packages/governance",
+        "packages/domain",
+        "packages/persistence",
+        "packages/publication"
+      ]
+    },
+    {
+      "id": "shareholder-development",
+      "name": "Shareholder Development Solution",
+      "repository": "organvm/victoroff-os",
+      "visibility": "private",
+      "state": "public_safe_exemplar",
+      "surfaces": [
+        "apps/shareholder-demo",
+        "apps/stewardship-demo",
+        "packages/shareholder-development"
+      ]
+    },
+    {
+      "id": "victoroff-commercial",
+      "name": "Victoroff Commercial",
+      "repository": null,
+      "visibility": "private",
+      "state": "authority_held",
+      "surfaces": []
+    }
+  ],
+  "path_owners": [
+    {
+      "id": "control-plane",
+      "owner": "victoroff-control-integrator",
+      "patterns": [
+        "AGENTS.md",
+        ".github/**",
+        "package.json",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml",
+        "program/**",
+        "scripts/control/**",
+        "tests/control/**",
+        "docs/program/**",
+        "docs/continuations/**"
+      ]
+    },
+    {
+      "id": "public-site",
+      "owner": "victoroff-site",
+      "patterns": ["apps/site/**", "tests/e2e/**", "tests/a11y/**"]
+    },
+    {
+      "id": "internal-os",
+      "owner": "victoroff-os-app",
+      "patterns": ["apps/os/**"]
+    },
+    {
+      "id": "shareholder-demo",
+      "owner": "shareholder-development",
+      "patterns": ["apps/shareholder-demo/**", "apps/stewardship-demo/**"]
+    },
+    {
+      "id": "api",
+      "owner": "victoroff-api",
+      "patterns": ["services/api/**"]
+    },
+    {
+      "id": "governance",
+      "owner": "victoroff-governance",
+      "patterns": ["docs/governance/**", "packages/governance/**"]
+    },
+    {
+      "id": "contracts",
+      "owner": "victoroff-contracts",
+      "patterns": ["packages/contracts/**"]
+    },
+    {
+      "id": "domain",
+      "owner": "victoroff-domain",
+      "patterns": ["packages/domain/**"]
+    },
+    {
+      "id": "persistence",
+      "owner": "victoroff-persistence",
+      "patterns": ["packages/persistence/**"]
+    },
+    {
+      "id": "publication",
+      "owner": "victoroff-publication",
+      "patterns": ["packages/publication/**"]
+    },
+    {
+      "id": "shareholder-development-package",
+      "owner": "shareholder-development",
+      "patterns": ["packages/shareholder-development/**"]
+    }
+  ],
+  "gates": [
+    {
+      "id": "control-main-green",
+      "state": "unresolved",
+      "owner": "victoroff-control-integrator",
+      "predicate": "node scripts/control/check-live-control-gate.mjs",
+      "receipt_target": "github://organvm/victoroff-os/actions?branch=main&head=live"
+    },
+    {
+      "id": "authority-ratified",
+      "state": "authority_held",
+      "owner": "ratified-victoroff-principal",
+      "predicate": "issues #2 and #3 contain mutually consistent release receipts",
+      "receipt_target": "github://organvm/victoroff-os/issues/2+3"
+    }
+  ],
+  "delivery_graphs": [
+    {
+      "id": "bbnc-delivery-55-v1",
+      "name": "Legacy BBNC Concept plus Phase 0-9 delivery graph",
+      "program_id": "shareholder-development",
+      "scope": "public_safe_synthetic_exemplar",
+      "checkpoint_total": 55,
+      "provisional_claim_total": 12,
+      "claim_state": "provisional_pending_checkpoint_predicates",
+      "source": "https://github.com/organvm/victoroff-os/pull/11",
+      "phases": [
+        {
+          "id": "concept",
+          "name": "Working Victoroff proof",
+          "owner": "victoroff-site",
+          "allowed_paths": ["apps/site/**", "apps/stewardship-demo/**", "packages/**", "tests/**"],
+          "dependencies": [],
+          "predicate": "pnpm verify",
+          "receipt_target": "github://organvm/victoroff-os/actions/runs/29922088547",
+          "checkpoints": [
+            { "id": "BBNC-CONCEPT-01", "title": "Black-and-white public pitch", "claim": "provisional_verified" },
+            { "id": "BBNC-CONCEPT-02", "title": "Six public shareholder action journeys", "claim": "provisional_verified" },
+            { "id": "BBNC-CONCEPT-03", "title": "Concentric product model", "claim": "provisional_verified" },
+            { "id": "BBNC-CONCEPT-04", "title": "Synthetic Stewardship proof", "claim": "provisional_verified" },
+            { "id": "BBNC-CONCEPT-05", "title": "Tested deployment and rollback concept", "claim": "provisional_verified" }
+          ]
+        },
+        {
+          "id": "phase-0",
+          "name": "Authority, custody, and source integrity",
+          "owner": "ratified-victoroff-principal",
+          "allowed_paths": ["docs/governance/**"],
+          "dependencies": ["concept", "authority-ratified"],
+          "predicate": "signed authority packet checksum and precedence validation",
+          "receipt_target": "authority://victoroff/phase-0",
+          "checkpoints": [
+            { "id": "BBNC-P0-01", "title": "Signed authority charter", "claim": "authority_held" },
+            { "id": "BBNC-P0-02", "title": "Named owners and change authority", "claim": "authority_held" },
+            { "id": "BBNC-P0-03", "title": "Data, product, and IP split", "claim": "authority_held" },
+            { "id": "BBNC-P0-04", "title": "Acceptance and change control", "claim": "authority_held" },
+            { "id": "BBNC-P0-05", "title": "Client-controlled delivery accounts", "claim": "authority_held" }
+          ]
+        },
+        {
+          "id": "phase-1",
+          "name": "Discovery and adoption definition",
+          "owner": "victoroff-discovery",
+          "allowed_paths": ["docs/research/**", "packages/fixtures/**"],
+          "dependencies": ["phase-0"],
+          "predicate": "approved discovery charter and measurable adoption outcomes",
+          "receipt_target": "decision://victoroff/phase-1",
+          "checkpoints": [
+            { "id": "BBNC-P1-01", "title": "Public task baseline and six sourced journeys", "claim": "provisional_verified" },
+            { "id": "BBNC-P1-02", "title": "Authority and role inventory", "claim": "open" },
+            { "id": "BBNC-P1-03", "title": "Service, content, data, and integration inventory", "claim": "open" },
+            { "id": "BBNC-P1-04", "title": "Moderated research and adoption workflow", "claim": "open" },
+            { "id": "BBNC-P1-05", "title": "Success metrics and risk register", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-2",
+          "name": "Product, UX, and architecture contract",
+          "owner": "victoroff-architecture",
+          "allowed_paths": ["docs/architecture/**", "packages/contracts/**", "packages/ui/**"],
+          "dependencies": ["phase-1"],
+          "predicate": "approved traceability, schemas, threat model, ADRs, and release plan",
+          "receipt_target": "decision://victoroff/phase-2",
+          "checkpoints": [
+            { "id": "BBNC-P2-01", "title": "Domain and publication architecture", "claim": "provisional_verified" },
+            { "id": "BBNC-P2-02", "title": "Accessible black-and-white prototypes", "claim": "provisional_verified" },
+            { "id": "BBNC-P2-03", "title": "Requirements and authorization matrix", "claim": "open" },
+            { "id": "BBNC-P2-04", "title": "Moderated UX validation", "claim": "open" },
+            { "id": "BBNC-P2-05", "title": "Threat model, ADRs, and release plan", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-3",
+          "name": "Production-capable foundation",
+          "owner": "victoroff-platform",
+          "allowed_paths": ["apps/os/**", "services/api/**", "packages/**"],
+          "dependencies": ["phase-2"],
+          "predicate": "clean-checkout setup, scoped verification, restart, audit, restore, and rollback pass",
+          "receipt_target": "release://victoroff/phase-3",
+          "checkpoints": [
+            { "id": "BBNC-P3-01", "title": "Pinned workspace, contracts, and domain kernel", "claim": "provisional_verified" },
+            { "id": "BBNC-P3-02", "title": "Authorized repositories and environment separation", "claim": "open" },
+            { "id": "BBNC-P3-03", "title": "Identity, authorization, and durable persistence", "claim": "open" },
+            { "id": "BBNC-P3-04", "title": "Audit, outbox, secrets, and telemetry controls", "claim": "open" },
+            { "id": "BBNC-P3-05", "title": "Backup, restore, and rollback proof", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-4",
+          "name": "Stateful vertical slice",
+          "owner": "victoroff-product",
+          "allowed_paths": ["apps/os/**", "services/api/**", "packages/**", "tests/**"],
+          "dependencies": ["phase-3"],
+          "predicate": "launch-site workflow passes lifecycle, authorization, citation, restart, audit, and rollback tests",
+          "receipt_target": "release://victoroff/phase-4",
+          "checkpoints": [
+            { "id": "BBNC-P4-01", "title": "Synthetic staff workflow", "claim": "provisional_verified" },
+            { "id": "BBNC-P4-02", "title": "Signed package, quarantine, replay, withdrawal, and rollback behavior", "claim": "provisional_verified" },
+            { "id": "BBNC-P4-03", "title": "Durable launch-site vertical slice", "claim": "open" },
+            { "id": "BBNC-P4-04", "title": "Authorized sources and shadow decision matching", "claim": "open" },
+            { "id": "BBNC-P4-05", "title": "Independent evidence export", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-5",
+          "name": "Complete internal OS and Communications operation",
+          "owner": "victoroff-operations",
+          "allowed_paths": ["apps/os/**", "services/api/**", "packages/**", "docs/runbooks/**"],
+          "dependencies": ["phase-4"],
+          "predicate": "all v1 roles and lifecycle paths pass with no critical authorization gap",
+          "receipt_target": "release://victoroff/phase-5",
+          "checkpoints": [
+            { "id": "BBNC-P5-01", "title": "Seven action entrances", "claim": "open" },
+            { "id": "BBNC-P5-02", "title": "Role-scoped portfolio and ownership", "claim": "open" },
+            { "id": "BBNC-P5-03", "title": "Approvals, decisions, risks, and releases", "claim": "open" },
+            { "id": "BBNC-P5-04", "title": "Governed Communications operation", "claim": "open" },
+            { "id": "BBNC-P5-05", "title": "Operator training and runbooks", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-6",
+          "name": "Shareholder Development alpha",
+          "owner": "shareholder-development",
+          "allowed_paths": ["apps/shareholder-demo/**", "apps/stewardship-demo/**", "packages/shareholder-development/**", "packages/fixtures/**"],
+          "dependencies": ["phase-5"],
+          "predicate": "six journeys pass accessibility, no-JavaScript, privacy, handoff, freshness, and completion tests",
+          "receipt_target": "release://victoroff/phase-6",
+          "checkpoints": [
+            { "id": "BBNC-P6-01", "title": "Six public-guide journeys", "claim": "provisional_verified" },
+            { "id": "BBNC-P6-02", "title": "Authorized content ingestion and source expiry", "claim": "open" },
+            { "id": "BBNC-P6-03", "title": "Route health and human fallback", "claim": "open" },
+            { "id": "BBNC-P6-04", "title": "Privacy-preserving outcome signals", "claim": "open" },
+            { "id": "BBNC-P6-05", "title": "Moderated staging validation", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-7",
+          "name": "Adoption beta and migration",
+          "owner": "victoroff-adoption",
+          "allowed_paths": ["apps/**", "services/**", "packages/**", "docs/adoption/**"],
+          "dependencies": ["phase-6"],
+          "predicate": "production-equivalent beta and migration rehearsal pass",
+          "receipt_target": "release://victoroff/phase-7",
+          "checkpoints": [
+            { "id": "BBNC-P7-01", "title": "Integration IA, templates, search, and directories", "claim": "open" },
+            { "id": "BBNC-P7-02", "title": "Migration inventory and importers", "claim": "open" },
+            { "id": "BBNC-P7-03", "title": "Media rights, redirects, and SEO", "claim": "open" },
+            { "id": "BBNC-P7-04", "title": "Degraded modes and operator tooling", "claim": "open" },
+            { "id": "BBNC-P7-05", "title": "Adoption, procurement, business-plan, and beta-deck package", "claim": "open" }
+          ]
+        },
+        {
+          "id": "phase-8",
+          "name": "Release candidate, official pitch, and controlled cutover",
+          "owner": "victoroff-release",
+          "allowed_paths": ["apps/**", "services/**", "packages/**", "docs/release/**"],
+          "dependencies": ["phase-7", "authority-ratified"],
+          "predicate": "exact tested revision, rollback, evidence-backed decision packet, and release approvals pass",
+          "receipt_target": "release://victoroff/phase-8",
+          "checkpoints": [
+            { "id": "BBNC-P8-01", "title": "Frozen exact release candidate", "claim": "open" },
+            { "id": "BBNC-P8-02", "title": "Performance, security, and accessibility acceptance", "claim": "open" },
+            { "id": "BBNC-P8-03", "title": "Backup, restore, rollback, and incident demonstration", "claim": "open" },
+            { "id": "BBNC-P8-04", "title": "Official deck, demo, plan, proposal, and decision packet", "claim": "open" },
+            { "id": "BBNC-P8-05", "title": "Authority-released controlled cutover", "claim": "authority_held" }
+          ]
+        },
+        {
+          "id": "phase-9",
+          "name": "Independent operation and Omega",
+          "owner": "authorized-client-operators",
+          "allowed_paths": ["docs/operations/**", "docs/training/**"],
+          "dependencies": ["phase-8"],
+          "predicate": "operators complete two releases and one restore without undocumented vendor custody",
+          "receipt_target": "acceptance://victoroff/phase-9",
+          "checkpoints": [
+            { "id": "BBNC-P9-01", "title": "Two client-run release cycles", "claim": "open" },
+            { "id": "BBNC-P9-02", "title": "Client-run recovery exercise", "claim": "open" },
+            { "id": "BBNC-P9-03", "title": "Monitoring, SLO, and outcome review", "claim": "open" },
+            { "id": "BBNC-P9-04", "title": "Access review, training, succession, and vendor exit", "claim": "open" },
+            { "id": "BBNC-P9-05", "title": "Reusable solution release and repeatable onboarding", "claim": "open" }
+          ]
+        }
+      ]
+    }
+  ],
+  "work_packets": [
+    {
+      "id": "VIC-PR11-INTEGRATE",
+      "objective": "Reconcile PR #11 into registry-derived secondary proof surfaces without overwriting its owner",
+      "owner": "victoroff-control-integrator",
+      "target_agent": "integration",
+      "state": "blocked",
+      "integration_packet": true,
+      "allowed_paths": ["apps/site/index.html", "apps/site/src/site.css", "tests/e2e/action-center.spec.ts"],
+      "forbidden_paths": ["tasks.yaml", "pnpm-lock.yaml"],
+      "dependencies": ["control-main-green"],
+      "predicate": "pnpm verify:scoped",
+      "receipt_target": "github://organvm/victoroff-os/pulls/11"
+    },
+    {
+      "id": "VIC-GOV-001",
+      "objective": "Create the classified governance-source manifest with provenance, checksums, and missing-source failures",
+      "owner": "victoroff-governance",
+      "target_agent": "jules",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["docs/governance/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["control-main-green"],
+      "predicate": "node --test docs/governance/*.test.mjs",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-GOV-001"
+    },
+    {
+      "id": "VIC-CONTRACT-001",
+      "objective": "Add schemas and tests for GovernanceDocument, ActionIntent, GovernanceResolution, and delivery checkpoints",
+      "owner": "victoroff-contracts",
+      "target_agent": "jules",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["packages/contracts/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["control-main-green"],
+      "predicate": "pnpm --filter @victoroff/contracts typecheck",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-CONTRACT-001"
+    },
+    {
+      "id": "VIC-DOMAIN-001",
+      "objective": "Implement deterministic seven-intent resolver fixtures, precedence, ambiguity, conflicts, and tests",
+      "owner": "victoroff-domain",
+      "target_agent": "jules",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["packages/domain/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["control-main-green"],
+      "predicate": "pnpm --filter @victoroff/domain test",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-DOMAIN-001"
+    }
+  ],
+  "jules_campaign": {
+    "state": "blocked_on_control_main_green",
+    "rolling_window_hours": 24,
+    "ordinary_start_limit": 96,
+    "recovery_reserve": 4,
+    "max_starts_per_sliding_hour": 4,
+    "minimum_refill_minutes": 15,
+    "initial_wip": 3,
+    "promotion_wip": [5, 8],
+    "launch_command": "limen dispatch --agent jules --task <TASK_ID> --live",
+    "broad_dispatch_allowed": false,
+    "parallel_above_one_allowed": false,
+    "scorecard_interval_hours": 2,
+    "daily_envelope": {
+      "core_os_governance": 40,
+      "shareholder_development": 24,
+      "test_security_accessibility": 16,
+      "commercial_deck": 8,
+      "documentation_evidence": 8,
+      "recovery_reserve": 4
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://victoroff.invalid/schemas/victoroff-program.v1.schema.json",
+  "title": "Victoroff program registry",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "program_id",
+    "governing_ux_rule",
+    "authority",
+    "actions",
+    "programs",
+    "path_owners",
+    "gates",
+    "delivery_graphs",
+    "work_packets",
+    "jules_campaign"
+  ],
+  "properties": {
+    "schema_version": { "const": "victoroff.program-registry.v1" },
+    "program_id": { "const": "victoroff" },
+    "governing_ux_rule": { "const": "complex governance underneath; simple actions on top" },
+    "authority": {
+      "type": "object",
+      "required": ["mode", "real_bbnc_data_allowed", "real_bbnc_identity_allowed", "representation_allowed", "holds"]
+    },
+    "actions": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["id", "label"]
+      }
+    },
+    "programs": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "repository", "visibility", "state", "surfaces"]
+      }
+    },
+    "path_owners": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "patterns"]
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "state", "owner", "predicate", "receipt_target"]
+      }
+    },
+    "delivery_graphs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "program_id", "checkpoint_total", "provisional_claim_total", "claim_state", "phases"]
+      }
+    },
+    "work_packets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "objective",
+          "owner",
+          "target_agent",
+          "state",
+          "integration_packet",
+          "allowed_paths",
+          "forbidden_paths",
+          "dependencies",
+          "predicate",
+          "receipt_target"
+        ]
+      }
+    },
+    "jules_campaign": { "type": "object" }
+  },
+  "additionalProperties": false
+}
