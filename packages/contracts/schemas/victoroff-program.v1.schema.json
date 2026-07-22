@@ -9,6 +9,8 @@
     "governing_ux_rule",
     "authority",
     "actions",
+    "source_inputs",
+    "product_extensions",
     "programs",
     "path_owners",
     "gates",
@@ -31,6 +33,31 @@
       "items": {
         "type": "object",
         "required": ["id", "label"]
+      }
+    },
+    "source_inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "record", "disposition"]
+      }
+    },
+    "product_extensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "program_id",
+          "state",
+          "contract",
+          "owner",
+          "dependencies",
+          "predicate",
+          "receipt_target"
+        ]
       }
     },
     "programs": {

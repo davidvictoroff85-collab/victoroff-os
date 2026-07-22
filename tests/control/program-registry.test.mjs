@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  readBrainstormContracts,
   readRegistry,
   readSchema,
+  validateBrainstormContracts,
   validateRegistry,
   validateSchemaShape,
 } from "../../scripts/control/validate-program-registry.mjs";
@@ -12,6 +14,19 @@ test("the checked-in registry satisfies semantic controls", async () => {
   const schema = await readSchema();
   assert.deepEqual(validateSchemaShape(registry, schema), []);
   assert.deepEqual(validateRegistry(registry), []);
+});
+
+test("the brainstorm contracts preserve tier and finance boundaries", async () => {
+  assert.deepEqual(validateBrainstormContracts(await readBrainstormContracts()), []);
+});
+
+test("fabricated tier progress and premature finance production are rejected", async () => {
+  const contracts = structuredClone(await readBrainstormContracts());
+  contracts.tiers.unlock_contract.percentages = "invented_by_model";
+  contracts.finance.production_enabled = true;
+  const errors = validateBrainstormContracts(contracts);
+  assert.ok(errors.some((error) => error.includes("percentages must be evidence-derived")));
+  assert.ok(errors.some((error) => error.includes("production must remain disabled")));
 });
 
 test("the schema rejects a missing required registry surface", async () => {

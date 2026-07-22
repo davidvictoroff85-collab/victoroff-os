@@ -1,0 +1,74 @@
+{
+  "schema_version": "victoroff.economic-agency-tiers.v1",
+  "id": "economic-agency-tiers-v1",
+  "source_id": "victoroff-brainstorm-20260722-tier-finance",
+  "program_id": "victoroff-os",
+  "state": "accepted_product_direction",
+  "governance_placement": "operational_product_specification_below_constitution",
+  "promise": "Victoroff helps a person progress from managing life toward owning an institution",
+  "financial_freedom_claim_mode": "measured_trajectory_not_guarantee",
+  "pillars": [
+    { "id": "money", "label": "Money" },
+    { "id": "career", "label": "Career" },
+    { "id": "assets", "label": "Assets" },
+    { "id": "systems", "label": "Systems" },
+    { "id": "ownership", "label": "Ownership" }
+  ],
+  "tiers": [
+    {
+      "level": 1,
+      "roman": "I",
+      "id": "foundation",
+      "identity": "Foundation",
+      "agency": "Control yourself",
+      "scope": ["money", "time", "habits", "obligations"]
+    },
+    {
+      "level": 2,
+      "roman": "II",
+      "id": "earner",
+      "identity": "Earner",
+      "agency": "Control your income",
+      "scope": ["income", "career", "opportunities"]
+    },
+    {
+      "level": 3,
+      "roman": "III",
+      "id": "builder",
+      "identity": "Builder",
+      "agency": "Control your capital",
+      "scope": ["savings", "assets", "capital allocation"]
+    },
+    {
+      "level": 4,
+      "roman": "IV",
+      "id": "operator",
+      "identity": "Operator",
+      "agency": "Control systems",
+      "scope": ["projects", "budgets", "workflows", "bounded AI assistance"]
+    },
+    {
+      "level": 5,
+      "roman": "V",
+      "id": "business-owner",
+      "identity": "Business Owner",
+      "agency": "Own the system",
+      "scope": ["enterprise", "capital", "people", "governance", "institutional operations"]
+    }
+  ],
+  "unlock_contract": {
+    "basis": "versioned_measurable_criteria",
+    "percentages": "derived_only_from_sourced_fresh_metrics",
+    "required_output": "exactly_one_valid_next_action",
+    "manual_override": "audited_and_authorized",
+    "missing_data": "show_unknown_never_zero_or_invented",
+    "user_control": "explain_sources_and_allow_safe_correction"
+  },
+  "acceptance": [
+    "Every tier has measurable, versioned unlock criteria before implementation",
+    "Every progress display cites its inputs, freshness, and calculation",
+    "Financial freedom is described as a trajectory, never a guaranteed outcome",
+    "Tier identity never changes constitutional authority or grants an approval role",
+    "Tier V unlocks institutional product capability only after separate product and authority gates"
+  ]
+}

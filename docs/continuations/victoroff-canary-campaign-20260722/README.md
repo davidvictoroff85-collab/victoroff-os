@@ -13,6 +13,8 @@ without crossing the authority holds.
 - Control branch: `agent/victoroff-control-plane-20260722`.
 - Registry: `program/registry.v1.json`.
 - PR #11 reconciliation: `program/reconciliations/pr-11.v1.json`.
+- Tier progression: `program/product/economic-agency-tiers.v1.json`.
+- Embedded-finance reservation: `program/product/embedded-finance-reservation.v1.json`.
 - Authority/custody holds: issues #2 and #3.
 - Required control predicate: `node scripts/control/check-live-control-gate.mjs`.
 
@@ -44,6 +46,10 @@ node scripts/control/check-live-control-gate.mjs
 If the live control gate is green, create and launch `VIC-GOV-001`, `VIC-CONTRACT-001`, and
 `VIC-DOMAIN-001` using the exact registry contracts. Re-check true rolling Jules usage by unique
 numeric session ID before each launch.
+
+`VIC-TIER-001` remains dependent on the merged domain canary. `VIC-FINANCE-001` remains dependent on
+the tier packet and may produce only provider-neutral architecture and risk evidence. Neither packet
+authorizes an account, card, payment, credit, money movement, vendor commitment, or financial claim.
 
 ## Completion and switching
 

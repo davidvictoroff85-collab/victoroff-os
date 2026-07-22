@@ -1,0 +1,41 @@
+{
+  "schema_version": "victoroff.embedded-finance-reservation.v1",
+  "id": "embedded-finance-reservation-v1",
+  "source_id": "victoroff-brainstorm-20260722-tier-finance",
+  "program_id": "victoroff-os",
+  "state": "future_regulated_layer",
+  "production_enabled": false,
+  "victoroff_is_bank": false,
+  "operating_model": {
+    "victoroff": "experience, governance, permissions, explanation, and audit",
+    "regulated_account_provider": "holds or services eligible accounts under its own authority",
+    "issuing_provider": "issues and processes credentials under an approved program",
+    "network": "routes eligible transactions under its rules"
+  },
+  "roadmap": [
+    "victoroff-os",
+    "read-only-financial-integrations",
+    "virtual-card-pilot",
+    "physical-card-pilot",
+    "group-and-organization-controls",
+    "business-controls",
+    "deeper-embedded-financial-services"
+  ],
+  "gates": [
+    "product decision and bounded use case",
+    "qualified legal and regulatory review",
+    "compliance ownership and operating procedures",
+    "regulated account and issuing partner diligence",
+    "security, privacy, fraud, dispute, and incident controls",
+    "data minimization, consent, retention, and deletion contract",
+    "precise claims review for insurance, custody, fees, credit, and eligibility",
+    "pilot acceptance, rollback, and vendor-exit plan"
+  ],
+  "claims_policy": {
+    "vendor_names": "discovered_and_validated_at_decision_time",
+    "insurance_language": "forbidden_without_program_specific_legal_and_partner_receipts",
+    "financial_outcomes": "never_guaranteed",
+    "card_variants": "concept_examples_not_committed_products"
+  },
+  "implementation_boundary": "No account, card, payment, credit, money movement, or transaction-data implementation begins from this reservation alone"
+}

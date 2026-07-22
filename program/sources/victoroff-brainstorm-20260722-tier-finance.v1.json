@@ -1,0 +1,50 @@
+{
+  "schema_version": "victoroff.source-lineage.v1",
+  "id": "victoroff-brainstorm-20260722-tier-finance",
+  "source_type": "operator_supplied_chat_export",
+  "exported_at": "2026-07-22T19:14:31-04:00",
+  "raw_source_tracked": false,
+  "sensitive_link_tracked": false,
+  "prompts": [
+    {
+      "id": "VIC-SRC-20260722-01",
+      "intent": "Make Victoroff tier-based, with Business Owner as the final level and each unlock moving the user closer to financial freedom",
+      "disposition": "accepted_with_non_guarantee_guard",
+      "contracts": ["economic-agency-tiers-v1"]
+    },
+    {
+      "id": "VIC-SRC-20260722-02",
+      "intent": "Execute immediate improvement while finalizing the pitch and business plan in a separate entity with an official deck and before-and-after AI-assisted evidence",
+      "disposition": "already_owned_and_reaffirmed",
+      "contracts": ["victoroff-commercial", "BBNC-P8-04"]
+    },
+    {
+      "id": "VIC-SRC-20260722-03",
+      "intent": "Proceed",
+      "disposition": "authorizes_reversible_contract_integration",
+      "contracts": ["economic-agency-tiers-v1", "embedded-finance-reservation-v1"]
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "VIC-SRC-REC-01",
+      "idea": "Treat tier progression as increasing economic agency rather than status",
+      "disposition": "adopted_as_product_principle"
+    },
+    {
+      "id": "VIC-SRC-REC-02",
+      "idea": "Reserve cards and accounts as a future embedded-finance layer",
+      "disposition": "reserved_not_authorized_for_build"
+    },
+    {
+      "id": "VIC-SRC-REC-03",
+      "idea": "Use named issuing vendors or card variants from the brainstorm",
+      "disposition": "not_adopted_without_live_market_and_partner_review"
+    },
+    {
+      "id": "VIC-SRC-REC-04",
+      "idea": "Display example percentages as user progress",
+      "disposition": "not_adopted_without_metric_evidence"
+    }
+  ]
+}

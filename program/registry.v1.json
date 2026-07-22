@@ -41,6 +41,35 @@
     { "id": "see-status", "label": "See What's Happening" },
     { "id": "understand", "label": "Understand Victoroff" }
   ],
+  "source_inputs": [
+    {
+      "id": "victoroff-brainstorm-20260722-tier-finance",
+      "record": "program/sources/victoroff-brainstorm-20260722-tier-finance.v1.json",
+      "disposition": "folded_with_authority_and_evidence_guards"
+    }
+  ],
+  "product_extensions": [
+    {
+      "id": "economic-agency-tiers-v1",
+      "program_id": "victoroff-os",
+      "state": "accepted_product_direction",
+      "contract": "program/product/economic-agency-tiers.v1.json",
+      "owner": "victoroff-progression",
+      "dependencies": ["control-main-green"],
+      "predicate": "registry validation proves five ordered tiers, measurable unlocks, and non-guarantee language",
+      "receipt_target": "github://organvm/victoroff-os/program/product/economic-agency-tiers.v1.json"
+    },
+    {
+      "id": "embedded-finance-reservation-v1",
+      "program_id": "victoroff-os",
+      "state": "future_regulated_layer",
+      "contract": "program/product/embedded-finance-reservation.v1.json",
+      "owner": "victoroff-finance-architecture",
+      "dependencies": ["economic-agency-tiers-v1", "financial-product-authorized"],
+      "predicate": "financial implementation remains disabled until product, legal, compliance, partner, security, and claims gates have receipts",
+      "receipt_target": "github://organvm/victoroff-os/program/product/embedded-finance-reservation.v1.json"
+    }
+  ],
   "programs": [
     {
       "id": "victoroff-os",
@@ -54,6 +83,7 @@
         "services/api",
         "packages/governance",
         "packages/domain",
+        "packages/progression",
         "packages/persistence",
         "packages/publication"
       ]
@@ -145,12 +175,22 @@
       "id": "shareholder-development-package",
       "owner": "shareholder-development",
       "patterns": ["packages/shareholder-development/**"]
+    },
+    {
+      "id": "progression",
+      "owner": "victoroff-progression",
+      "patterns": ["packages/progression/**"]
+    },
+    {
+      "id": "finance-architecture",
+      "owner": "victoroff-finance-architecture",
+      "patterns": ["docs/finance/**"]
     }
   ],
   "gates": [
     {
       "id": "control-main-green",
-      "state": "unresolved",
+      "state": "derive_live",
       "owner": "victoroff-control-integrator",
       "predicate": "node scripts/control/check-live-control-gate.mjs",
       "receipt_target": "github://organvm/victoroff-os/actions?branch=main&head=live"
@@ -161,6 +201,13 @@
       "owner": "ratified-victoroff-principal",
       "predicate": "issues #2 and #3 contain mutually consistent release receipts",
       "receipt_target": "github://organvm/victoroff-os/issues/2+3"
+    },
+    {
+      "id": "financial-product-authorized",
+      "state": "human_product_gate",
+      "owner": "ratified-victoroff-product-principal",
+      "predicate": "a reviewed product decision plus legal, compliance, regulated-partner, security, privacy, and claims receipts authorize a bounded financial product",
+      "receipt_target": "decision://victoroff/embedded-finance"
     }
   ],
   "delivery_graphs": [
@@ -405,10 +452,36 @@
       "dependencies": ["control-main-green"],
       "predicate": "pnpm --filter @victoroff/domain test",
       "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-DOMAIN-001"
+    },
+    {
+      "id": "VIC-TIER-001",
+      "objective": "Implement the evidence-backed five-tier economic-agency domain without fabricated progress",
+      "owner": "victoroff-progression",
+      "target_agent": "jules",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["packages/progression/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["VIC-DOMAIN-001"],
+      "predicate": "pnpm --filter @victoroff/progression test",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-TIER-001"
+    },
+    {
+      "id": "VIC-FINANCE-001",
+      "objective": "Produce the provider-neutral embedded-finance architecture, risk inventory, and authority-gate specification",
+      "owner": "victoroff-finance-architecture",
+      "target_agent": "jules",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["docs/finance/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["VIC-TIER-001"],
+      "predicate": "node --test docs/finance/*.test.mjs",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-FINANCE-001"
     }
   ],
   "jules_campaign": {
-    "state": "blocked_on_control_main_green",
+    "state": "requires_live_control_main_green",
     "rolling_window_hours": 24,
     "ordinary_start_limit": 96,
     "recovery_reserve": 4,

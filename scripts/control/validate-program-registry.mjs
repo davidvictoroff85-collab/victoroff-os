@@ -3,6 +3,9 @@ import { fileURLToPath } from "node:url";
 
 const registryUrl = new URL("../../program/registry.v1.json", import.meta.url);
 const schemaUrl = new URL("../../packages/contracts/schemas/victoroff-program.v1.schema.json", import.meta.url);
+const sourceUrl = new URL("../../program/sources/victoroff-brainstorm-20260722-tier-finance.v1.json", import.meta.url);
+const tiersUrl = new URL("../../program/product/economic-agency-tiers.v1.json", import.meta.url);
+const financeUrl = new URL("../../program/product/embedded-finance-reservation.v1.json", import.meta.url);
 
 function hasText(value) {
   return typeof value === "string" && value.trim().length > 0;
@@ -132,6 +135,8 @@ export function validateRegistry(registry) {
   const gates = new Map((registry?.gates ?? []).map((gate) => [gate.id, gate]));
   expect(gates.has("control-main-green"), "missing control-main-green gate");
   expect(gates.has("authority-ratified"), "missing authority-ratified gate");
+  expect(gates.has("financial-product-authorized"), "missing financial-product-authorized gate");
+  expect(gates.get("control-main-green")?.state === "derive_live", "control-main-green must be derived from live remote truth");
   for (const gate of gates.values()) {
     expect(hasText(gate.owner), `${gate.id}: gate owner is required`);
     expect(hasText(gate.predicate), `${gate.id}: gate predicate is required`);
@@ -139,6 +144,38 @@ export function validateRegistry(registry) {
   }
 
   const allIds = new Set([...actionIds, ...programs.keys(), ...ownerIds, ...gates.keys()]);
+  const sourceInputs = registry?.source_inputs ?? [];
+  for (const source of sourceInputs) {
+    expect(hasText(source.id), "source input id is required");
+    expect(!allIds.has(source.id), `duplicate global id ${source.id}`);
+    allIds.add(source.id);
+    expect(hasText(source.record), `${source.id}: source record is required`);
+    expect(hasText(source.disposition), `${source.id}: source disposition is required`);
+  }
+
+  const extensions = new Map((registry?.product_extensions ?? []).map((extension) => [extension.id, extension]));
+  const extensionIds = new Set(extensions.keys());
+  const extensionEdges = new Map();
+  for (const extension of extensions.values()) {
+    expect(!allIds.has(extension.id), `duplicate global id ${extension.id}`);
+    allIds.add(extension.id);
+    expect(programs.has(extension.program_id), `${extension.id}: unknown program ${extension.program_id}`);
+    expect(hasText(extension.state), `${extension.id}: state is required`);
+    expect(hasText(extension.contract), `${extension.id}: contract is required`);
+    expect(hasText(extension.owner), `${extension.id}: owner is required`);
+    expect(Array.isArray(extension.dependencies), `${extension.id}: dependencies must be an array`);
+    expect(hasText(extension.predicate), `${extension.id}: predicate is required`);
+    expect(hasText(extension.receipt_target), `${extension.id}: receipt target is required`);
+    extensionEdges.set(extension.id, (extension.dependencies ?? []).filter((dependency) => extensionIds.has(dependency)));
+    for (const dependency of extension.dependencies ?? []) {
+      expect(extensionIds.has(dependency) || gates.has(dependency), `${extension.id}: unknown dependency ${dependency}`);
+    }
+  }
+  expect(extensions.has("economic-agency-tiers-v1"), "missing economic-agency-tiers-v1 extension");
+  expect(extensions.has("embedded-finance-reservation-v1"), "missing embedded-finance-reservation-v1 extension");
+  const extensionCycle = findCycle(extensionIds, extensionEdges);
+  expect(!extensionCycle, `product extension dependency cycle ${extensionCycle?.join(" -> ")}`);
+
   const graphs = registry?.delivery_graphs ?? [];
   expect(graphs.length >= 1, "at least one delivery graph is required");
   for (const graph of graphs) {
@@ -234,7 +271,7 @@ export function validateRegistry(registry) {
   }
 
   const campaign = registry?.jules_campaign;
-  expect(campaign?.state === "blocked_on_control_main_green", "Jules campaign must remain blocked until control-main-green resolves");
+  expect(campaign?.state === "requires_live_control_main_green", "Jules campaign must derive control-main-green before launch");
   expect(campaign?.ordinary_start_limit === 96, "ordinary Jules start limit must preserve four recovery starts");
   expect(campaign?.recovery_reserve === 4, "Jules recovery reserve must be four");
   expect(campaign?.broad_dispatch_allowed === false, "broad Jules dispatch must remain disabled");
@@ -253,10 +290,60 @@ export async function readSchema(url = schemaUrl) {
   return JSON.parse(await readFile(url, "utf8"));
 }
 
+export async function readBrainstormContracts() {
+  const [source, tiers, finance] = await Promise.all(
+    [sourceUrl, tiersUrl, financeUrl].map(async (url) => JSON.parse(await readFile(url, "utf8"))),
+  );
+  return { source, tiers, finance };
+}
+
+export function validateBrainstormContracts({ source, tiers, finance }) {
+  const errors = [];
+  const expect = (condition, message) => {
+    if (!condition) errors.push(message);
+  };
+
+  expect(source?.schema_version === "victoroff.source-lineage.v1", "brainstorm source schema mismatch");
+  expect(source?.id === "victoroff-brainstorm-20260722-tier-finance", "brainstorm source id mismatch");
+  expect(source?.raw_source_tracked === false, "raw brainstorm must remain outside the tracked repository");
+  expect(source?.sensitive_link_tracked === false, "sensitive brainstorm link must remain untracked");
+  expect(source?.prompts?.length === 3, "brainstorm must preserve three prompt events");
+  expect(source?.prompts?.some((prompt) => prompt.contracts?.includes("victoroff-commercial")), "commercial and official-deck intent must remain mapped");
+
+  expect(tiers?.schema_version === "victoroff.economic-agency-tiers.v1", "tier contract schema mismatch");
+  expect(tiers?.source_id === source?.id, "tier contract source lineage mismatch");
+  expect(tiers?.financial_freedom_claim_mode === "measured_trajectory_not_guarantee", "financial freedom must remain a measured trajectory, not a guarantee");
+  expect(JSON.stringify(tiers?.pillars?.map((pillar) => pillar.id)) === JSON.stringify(["money", "career", "assets", "systems", "ownership"]), "tier pillars must remain ordered Money through Ownership");
+  expect(tiers?.tiers?.length === 5, "tier contract must contain five tiers");
+  expect(JSON.stringify(tiers?.tiers?.map((tier) => tier.level)) === JSON.stringify([1, 2, 3, 4, 5]), "tier levels must be ordered 1 through 5");
+  expect(tiers?.tiers?.[4]?.identity === "Business Owner", "Tier V must be Business Owner");
+  expect(tiers?.unlock_contract?.percentages === "derived_only_from_sourced_fresh_metrics", "tier percentages must be evidence-derived");
+  expect(tiers?.unlock_contract?.missing_data === "show_unknown_never_zero_or_invented", "missing tier data must remain unknown");
+  expect(tiers?.unlock_contract?.required_output === "exactly_one_valid_next_action", "tier state must return one valid next action");
+
+  expect(finance?.schema_version === "victoroff.embedded-finance-reservation.v1", "embedded-finance schema mismatch");
+  expect(finance?.source_id === source?.id, "embedded-finance source lineage mismatch");
+  expect(finance?.state === "future_regulated_layer", "embedded finance must remain a future regulated layer");
+  expect(finance?.production_enabled === false, "embedded-finance production must remain disabled");
+  expect(finance?.victoroff_is_bank === false, "Victoroff must not be represented as a bank");
+  expect(finance?.roadmap?.[0] === "victoroff-os", "embedded-finance roadmap must begin with Victoroff OS");
+  expect(finance?.gates?.length >= 8, "embedded finance requires the full product, legal, compliance, partner, security, claims, and exit gates");
+  expect(finance?.claims_policy?.vendor_names === "discovered_and_validated_at_decision_time", "provider selection must remain live and unpinned");
+  expect(finance?.claims_policy?.insurance_language === "forbidden_without_program_specific_legal_and_partner_receipts", "insurance language must fail closed");
+  expect(finance?.implementation_boundary?.startsWith("No account, card, payment, credit, money movement"), "embedded-finance reservation must not authorize implementation");
+  expect(!/Marqeta|FDIC insured/i.test(JSON.stringify({ source, tiers, finance })), "unverified vendor or insurance claims must not enter tracked contracts");
+  return errors;
+}
+
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const registry = await readRegistry();
   const schema = await readSchema();
-  const errors = [...validateSchemaShape(registry, schema), ...validateRegistry(registry)];
+  const contracts = await readBrainstormContracts();
+  const errors = [
+    ...validateSchemaShape(registry, schema),
+    ...validateRegistry(registry),
+    ...validateBrainstormContracts(contracts),
+  ];
   if (errors.length > 0) {
     for (const error of errors) console.error(`FAIL: ${error}`);
     process.exit(1);
