@@ -193,7 +193,7 @@
       "state": "derive_live",
       "owner": "victoroff-control-integrator",
       "predicate": "node scripts/control/check-live-control-gate.mjs",
-      "receipt_target": "github://organvm/victoroff-os/actions?branch=main&head=live"
+      "receipt_target": "github://organvm/victoroff-os/actions?branch=main&head=live&workflows=verify,CodeQL"
     },
     {
       "id": "authority-ratified",
@@ -437,7 +437,7 @@
       "allowed_paths": ["packages/contracts/**"],
       "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
       "dependencies": ["control-main-green"],
-      "predicate": "pnpm --filter @victoroff/contracts typecheck",
+      "predicate": "pnpm --filter @victoroff/contracts test && pnpm --filter @victoroff/contracts typecheck",
       "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-CONTRACT-001"
     },
     {

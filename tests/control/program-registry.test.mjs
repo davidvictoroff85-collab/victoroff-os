@@ -68,3 +68,25 @@ test("unknown dependencies and cycles are rejected", async () => {
   const errors = validateRegistry(registry);
   assert.ok(errors.some((error) => error.includes("dependency cycle")));
 });
+
+test("historical integration packets coexist but active integration remains single-writer", async () => {
+  const registry = structuredClone(await readRegistry());
+  const historical = structuredClone(registry.work_packets.find((packet) => packet.id === "VIC-PR11-INTEGRATE"));
+  historical.id = "VIC-HISTORICAL-INTEGRATION";
+  historical.state = "done";
+  historical.allowed_paths = ["docs/program/historical-integration.md"];
+  registry.work_packets.push(historical);
+  assert.deepEqual(validateRegistry(registry), []);
+
+  historical.state = "ready";
+  assert.ok(validateRegistry(registry).some((error) => error.includes("at most one active integration packet")));
+});
+
+test("the contracts canary predicate runs tests before typechecking", async () => {
+  const registry = await readRegistry();
+  const packet = registry.work_packets.find((candidate) => candidate.id === "VIC-CONTRACT-001");
+  assert.equal(
+    packet.predicate,
+    "pnpm --filter @victoroff/contracts test && pnpm --filter @victoroff/contracts typecheck",
+  );
+});

@@ -225,6 +225,7 @@ export function validateRegistry(registry) {
   const packetEdges = new Map();
   const activePackets = [];
   let integrationPackets = 0;
+  let activeIntegrationPackets = 0;
   const sharedPaths = ["AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml", "pnpm-workspace.yaml"];
 
   for (const packet of packets) {
@@ -253,11 +254,15 @@ export function validateRegistry(registry) {
       expect(!packet.forbidden_paths.some((forbidden) => patternsOverlap(allowed, forbidden)), `${packet.id}: ${allowed} overlaps a forbidden path`);
       expect(packet.integration_packet || !sharedPaths.some((shared) => patternsOverlap(allowed, shared)), `${packet.id}: only the integration packet may touch ${allowed}`);
     }
-    if (packet.integration_packet) integrationPackets += 1;
+    if (packet.integration_packet) {
+      integrationPackets += 1;
+      if (["blocked", "ready", "in_progress"].includes(packet.state)) activeIntegrationPackets += 1;
+    }
     if (["blocked", "ready", "in_progress"].includes(packet.state)) activePackets.push(packet);
   }
 
-  expect(integrationPackets === 1, "exactly one integration packet is required");
+  expect(integrationPackets >= 1, "at least one integration packet is required");
+  expect(activeIntegrationPackets <= 1, "at most one active integration packet is allowed");
   const packetCycle = findCycle(packetIds, packetEdges);
   expect(!packetCycle, `work packet dependency cycle ${packetCycle?.join(" -> ")}`);
 

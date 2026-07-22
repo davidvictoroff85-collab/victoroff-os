@@ -10,13 +10,17 @@ without crossing the authority holds.
 ## Current evidence
 
 - Repository: `organvm/victoroff-os` (private).
-- Control branch: `agent/victoroff-control-plane-20260722`.
+- Control repair: PR #14, branch `codex/vic-control-ci-001-20260722`.
 - Registry: `program/registry.v1.json`.
 - PR #11 reconciliation: `program/reconciliations/pr-11.v1.json`.
 - Tier progression: `program/product/economic-agency-tiers.v1.json`.
 - Embedded-finance reservation: `program/product/embedded-finance-reservation.v1.json`.
 - Authority/custody holds: issues #2 and #3.
 - Required control predicate: `node scripts/control/check-live-control-gate.mjs`.
+- Limen rail repair: `organvm/limen` PR #1364.
+- Deployed Conduct schema owner: `organvm/limen` issue #1365.
+- Live-root/governor recovery owner: `organvm/limen` issue #1366.
+- Installed heartbeat cartridge owner: `organvm/domus-genoma` issue #320.
 
 Derive the current remote main SHA, exact check receipts, open PRs, active worktrees, Limen board,
 Jules usage telemetry, host admission, and packet dependencies again at launch. Do not reuse the SHAs
@@ -41,10 +45,14 @@ gh pr list --repo organvm/victoroff-os --state open
 git worktree list --porcelain
 pnpm verify:control
 node scripts/control/check-live-control-gate.mjs
+python3 /Users/4jp/Workspace/limen/scripts/host-work-admission.py status
+python3 /Users/4jp/Workspace/limen/scripts/autonomy-governor.py dispatch-ok
 ```
 
-If the live control gate is green, create and launch `VIC-GOV-001`, `VIC-CONTRACT-001`, and
-`VIC-DOMAIN-001` using the exact registry contracts. Re-check true rolling Jules usage by unique
+Create and launch `VIC-GOV-001`, `VIC-CONTRACT-001`, and `VIC-DOMAIN-001` using the exact registry
+contracts only after the Victoroff control repair and Limen rail repair are merged, the Conduct
+schema accepts the current WorkLoan packet, host admission reports `allowed: true`, and
+`dispatch-ok` exits zero without `LIMEN_FORCE_AUTONOMY`. Re-check true rolling Jules usage by unique
 numeric session ID before each launch.
 
 `VIC-TIER-001` remains dependent on the merged domain canary. `VIC-FINANCE-001` remains dependent on

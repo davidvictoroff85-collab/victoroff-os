@@ -3,7 +3,7 @@
   "slug": "victoroff-canary-campaign-20260722",
   "branch": "agent/victoroff-canary-campaign-20260722",
   "from": "origin/main",
-  "control_receipt": "https://github.com/organvm/victoroff-os/pull/12",
+  "control_receipt": "https://github.com/organvm/victoroff-os/pull/14",
   "contract": {
     "schema": "limen.workstream.contract.v1",
     "runway": {

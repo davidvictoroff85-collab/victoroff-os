@@ -18,6 +18,7 @@ jobs:
     timeout-minutes: 3
     outputs:
       control: ${{ steps.plan.outputs.control }}
+      docs: ${{ steps.plan.outputs.docs }}
       code: ${{ steps.plan.outputs.code }}
       browser: ${{ steps.plan.outputs.browser }}
       release: ${{ steps.plan.outputs.release }}
@@ -55,6 +56,18 @@ jobs:
       - env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: git diff --check "$BASE_SHA...HEAD"
+
+  docs:
+    needs: scope
+    if: needs.scope.outputs.docs == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/control/run-doc-tests.mjs
 
   code:
     needs: scope
@@ -114,21 +127,20 @@ jobs:
 
   gate:
     if: always()
-    needs: [scope, control, code, browser, release]
+    needs: [scope, control, docs, code, browser, release]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
       - name: Check implicated shard receipts
         env:
           SCOPE_RESULT: ${{ needs.scope.result }}
           CONTROL_RESULT: ${{ needs.control.result }}
+          DOCS_RESULT: ${{ needs.docs.result }}
           CODE_RESULT: ${{ needs.code.result }}
           BROWSER_RESULT: ${{ needs.browser.result }}
           RELEASE_RESULT: ${{ needs.release.result }}
-        run: |
-          for result in "$SCOPE_RESULT" "$CONTROL_RESULT" "$CODE_RESULT" "$BROWSER_RESULT" "$RELEASE_RESULT"; do
-            if [ "$result" != "success" ] && [ "$result" != "skipped" ]; then
-              echo "Implicated shard did not pass: $result"
-              exit 1
-            fi
-          done
+        run: node scripts/control/check-ci-shard-results.mjs
