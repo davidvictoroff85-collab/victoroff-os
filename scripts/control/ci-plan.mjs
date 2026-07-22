@@ -23,7 +23,6 @@ export function classifyChangedFiles(files) {
       path.startsWith("tests/control/") ||
       path.startsWith("docs/program/") ||
       path.startsWith("docs/continuations/") ||
-      (path.startsWith("docs/") && !path.startsWith("docs/governance/") && !path.startsWith("docs/finance/")) ||
       path === "README.md" ||
       path === "design-qa.md" ||
       path === "packages/contracts/schemas/victoroff-program.v1.schema.json"

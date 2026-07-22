@@ -8,7 +8,7 @@ export function findSuccessfulControlReceipts(runs, mainSha) {
     (run) => run.headSha === mainSha && run.status === "completed" && run.conclusion === "success",
   );
   const verify = exactSuccessful.find((run) => run.workflowName === "verify");
-  const codeql = exactSuccessful.find((run) => run.workflowName.toLowerCase() === "codeql");
+  const codeql = exactSuccessful.find((run) => String(run.workflowName ?? "").toLowerCase() === "codeql");
   return { verify, codeql };
 }
 

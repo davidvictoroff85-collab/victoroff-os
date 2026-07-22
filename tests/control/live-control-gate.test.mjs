@@ -23,3 +23,10 @@ test("stale or failed CodeQL evidence does not release the gate", () => {
   assert.equal(findSuccessfulControlReceipts([successful("verify"), stale], mainSha).codeql, undefined);
   assert.equal(findSuccessfulControlReceipts([successful("verify"), failed], mainSha).codeql, undefined);
 });
+
+test("unnamed successful runs do not prevent exact CodeQL receipt matching", () => {
+  const unnamed = successful(undefined);
+  const receipts = findSuccessfulControlReceipts([unnamed, successful("verify"), successful("CodeQL")], mainSha);
+  assert.equal(receipts.verify.workflowName, "verify");
+  assert.equal(receipts.codeql.workflowName, "CodeQL");
+});

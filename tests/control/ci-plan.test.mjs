@@ -46,5 +46,6 @@ test("governance and finance test files run the dedicated docs shard", () => {
 
 test("a nonempty unclassified diff fails closed in the plan", () => {
   assert.deepEqual(planChangedFiles(["unowned/new-surface.txt"]).unclassified, ["unowned/new-surface.txt"]);
+  assert.deepEqual(planChangedFiles(["docs/research/new-surface.md"]).unclassified, ["docs/research/new-surface.md"]);
   assert.deepEqual(planChangedFiles([]).unclassified, []);
 });
