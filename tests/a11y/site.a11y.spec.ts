@@ -7,10 +7,10 @@ test("homepage has no detectable WCAG A or AA violations", async ({ page }) => {
   expect(results.violations).toEqual([]);
 });
 
-test("all critical routes and handoffs remain usable without JavaScript", async ({ browser }) => {
-  const context = await browser.newContext({ javaScriptEnabled: false });
+test("all critical routes and handoffs remain usable without JavaScript", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
   const page = await context.newPage();
-  await page.goto("http://127.0.0.1:4173/");
+  await page.goto("/");
   await expect(page.locator("[data-action-result]")).toHaveCount(6);
   for (const panel of await page.locator("[data-action-result]").all()) {
     await expect(panel).toBeVisible();
