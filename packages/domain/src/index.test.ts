@@ -28,6 +28,7 @@ describe("default-deny lifecycle", () => {
     const submitted = executeCommand(draft(), "submit", context("author-a", ["author"])).initiative;
     expect(() => executeCommand(submitted, "approve", { ...context("author-a", ["reviewer"]), idempotencyKey: "1111111111111111" })).toThrow("author cannot approve");
     const approved = executeCommand(submitted, "approve", { ...context("reviewer-b", ["reviewer"]), idempotencyKey: "2222222222222222" }).initiative;
+    expect(() => executeCommand(approved, "release", { ...context("author-a", ["releaser"]), idempotencyKey: "3333333333333333" })).toThrow("author cannot release");
     const released = executeCommand(approved, "release", { ...context("releaser-c", ["releaser"]), idempotencyKey: "3333333333333333" });
     expect(released.initiative.state).toBe("released");
     expect(released.event.exactRevision).toBe(4);
@@ -41,6 +42,12 @@ describe("default-deny lifecycle", () => {
 
   it("keeps an immutable, idempotent audit ledger", () => {
     const result = executeCommand(draft(), "submit", context("author-a", ["author"]));
+    const hydratedEvent = { ...result.event };
+    const hydrated = new AuditLedger([hydratedEvent]);
+    hydratedEvent.actorId = "mutated-after-hydration";
+    expect(hydrated.entries()[0]?.actorId).toBe("author-a");
+    expect(Object.isFrozen(hydrated.entries()[0])).toBe(true);
+
     const ledger = new AuditLedger().append(result.event);
     expect(Object.isFrozen(ledger.entries()[0])).toBe(true);
     expect(() => ledger.append(result.event)).toThrow("idempotency key");

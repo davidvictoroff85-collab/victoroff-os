@@ -35,6 +35,10 @@ test("tabs work from the keyboard", async ({ page }) => {
   await expect(page.locator('[data-action-result="forms-stock-wills"]')).toBeVisible();
 });
 
+test("initial tab setup does not move the landing page", async ({ page }) => {
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+});
+
 test("the concentric system exposes each ring", async ({ page }) => {
   await page.locator("#system").scrollIntoViewIfNeeded();
   for (const ring of ["guide", "connect", "operate", "rebuild", "own", "center"]) {

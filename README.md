@@ -6,7 +6,7 @@ Victoroff OS is a private, uncommissioned product concept for a public-safe shar
 center and a governed institutional publication system. It does not assert BBNC authority,
 affiliation, commission, production status, or permission to represent BBNC publicly.
 
-**Live rollback:** <https://victoroff-os.vercel.app>
+**Live concept:** <https://victoroff-os.vercel.app>
 
 ## Workspace
 
@@ -64,6 +64,7 @@ See [architecture](docs/architecture.md), [phase delivery](docs/phase-plan.md), 
 ## Existing remote receipts
 
 - Initial live source: `799ca7f` on `organvm/victoroff-os` `main`.
-- Rollback deployment: `dpl_9MT8gN1UWCjC9eq793F8izLi8aw5` (`READY`).
+- Current production deployment: `dpl_7BjzkZchCxWTeoew87jXkcdBJA84` (`READY`).
+- Preserved rollback deployment: `dpl_9MT8gN1UWCjC9eq793F8izLi8aw5` (`READY`).
 - Organization transfer and member-admin gate: [issue #3](https://github.com/organvm/victoroff-os/issues/3).
 - Private-repo Vercel Git integration gate: [issue #2](https://github.com/organvm/victoroff-os/issues/2).

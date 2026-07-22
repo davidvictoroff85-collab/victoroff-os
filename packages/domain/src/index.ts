@@ -63,8 +63,8 @@ export function executeCommand(
   if (context.expectedRevision !== initiative.revision) throw new DomainError("exact revision conflict");
   if (context.idempotencyKey.length < 16) throw new DomainError("idempotency key is too short");
   if (!context.roles.includes(requiredRole[command])) throw new DomainError("actor lacks required role");
-  if (command === "approve" && context.actorId === initiative.authorId) {
-    throw new DomainError("author cannot approve their own revision");
+  if ((command === "approve" || command === "release") && context.actorId === initiative.authorId) {
+    throw new DomainError(`author cannot ${command} their own revision`);
   }
   if (command === "release" && initiative.approvedRevision !== initiative.revision) {
     throw new DomainError("release requires approval of the exact revision");
@@ -106,7 +106,7 @@ export class AuditLedger {
   readonly #events: readonly AuditEvent[];
 
   constructor(events: readonly AuditEvent[] = []) {
-    this.#events = Object.freeze([...events]);
+    this.#events = Object.freeze(events.map((event) => Object.freeze({ ...event })));
   }
 
   append(event: AuditEvent): AuditLedger {

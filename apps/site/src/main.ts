@@ -12,7 +12,8 @@ if (actionButtons.length === shareholderActions.length && actionPanels.length ==
     buttons: actionButtons,
     panels: actionPanels,
     selectedId: "action-panel-distribution-records",
-    onSelect: (id) => {
+    onSelect: (id, userInitiated) => {
+      if (!userInitiated) return;
       const panel = document.getElementById(id);
       panel?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
     },
