@@ -11,8 +11,9 @@ It must not receive, process, or retain:
 
 The guide may display allow-listed public information with its source owner, source URL, review date,
 expiry date, system owner, explicit external handoff, and human fallback. Browser tests assert empty
-cookie and storage state. Vercel headers keep the concept `noindex, nofollow` and deny camera,
-microphone, and geolocation permissions.
+cookie and storage state. The Cloudflare `_headers` policy keeps the canonical static assets
+`noindex, nofollow` and denies camera, microphone, and geolocation permissions. The frozen Vercel
+rollback retains the same policy in `vercel.json`.
 
 BBNC's authenticated systems remain authoritative. The concept does not reproduce BBNC branding or
 logos and cannot move beyond public/synthetic data without a signed authority gate.

@@ -6,7 +6,11 @@ Victoroff OS is a private, uncommissioned product concept for a public-safe shar
 center and a governed institutional publication system. It does not assert BBNC authority,
 affiliation, commission, production status, or permission to represent BBNC publicly.
 
-**Live concept:** <https://victoroff-os.vercel.app>
+**Canonical host:** <https://victoroffgroup.com> via Cloudflare Workers Static Assets, after the
+cutover predicates in [issue #2](https://github.com/organvm/victoroff-os/issues/2) pass.
+
+**Frozen rollback:** <https://victoroff-os.vercel.app> remains public but noindexed. Do not
+redeploy or promote it during the Cloudflare lane.
 
 ## Workspace
 
@@ -21,12 +25,13 @@ affiliation, commission, production status, or permission to represent BBNC publ
 | `packages/ui` | Shared accessible black-and-white primitives | Both apps |
 
 The public site can import contracts, public fixtures, and UI only. It cannot import internal
-domain or publication code. `vercel.json` stages only `apps/site` into the deployable output.
+domain or publication code. `wrangler.jsonc` serves only the staged `dist/site` assets. The retained
+`vercel.json` validates the same output and headers for frozen rollback custody.
 
 ## Run
 
 ```bash
-pnpm install
+pnpm install --frozen-lockfile
 pnpm dev
 ```
 
@@ -45,11 +50,17 @@ pnpm test
 pnpm test:a11y
 pnpm test:e2e
 pnpm build
+pnpm run cloudflare:dry-run
 ```
+
+Node 24, pnpm 10.34.4, and Wrangler 4.104.0 are pinned. `pnpm run cloudflare:preview` uploads an
+unpromoted version for a commit-linked preview; `pnpm run cloudflare:deploy` is reserved for the
+gated production build rail.
 
 `pnpm lint` is a release-policy gate. It rejects non-black/white CSS colors, gradients, shadows,
 external fonts, missing concept/noindex controls, expired source records, broken static handoffs,
-unclassified action content, and forbidden public-to-internal dependencies.
+unclassified action content, forbidden public-to-internal dependencies, and any Worker script,
+runtime binding, or drift from the static-only Cloudflare and frozen Vercel boundaries.
 
 ## Safety boundary
 
@@ -67,4 +78,5 @@ See [architecture](docs/architecture.md), [phase delivery](docs/phase-plan.md), 
 - Current production deployment: `dpl_7BjzkZchCxWTeoew87jXkcdBJA84` (`READY`).
 - Preserved rollback deployment: `dpl_9MT8gN1UWCjC9eq793F8izLi8aw5` (`READY`).
 - Organization transfer and member-admin gate: [issue #3](https://github.com/organvm/victoroff-os/issues/3).
-- Private-repo Vercel Git integration gate: [issue #2](https://github.com/organvm/victoroff-os/issues/2).
+- Cloudflare preview, rollback rehearsal, privacy, accessibility, and apex cutover gate:
+  [issue #2](https://github.com/organvm/victoroff-os/issues/2).

@@ -5,7 +5,7 @@ receipt. Future work is authorized by the accepted output of the prior phase, no
 
 | Phase | Deployable surface | Acceptance predicate | Durable receipt |
 |---|---|---|---|
-| Concept | Victoroff-owned public/synthetic demonstration | Repository verification suite passes; `noindex` remains active | Private repository revision and Vercel deployment |
+| Concept | Victoroff-owned public/synthetic demonstration | Repository verification suite passes; `noindex` remains active | Private repository revision and Cloudflare deployment receipt; frozen Vercel rollback |
 | 0 | Authority and ownership workshop packet | BBNC signs the authority, owner, data, representation, and repository boundaries | Signed charter in a BBNC-controlled system |
 | 1 | Discovery evidence and tested task model | Named shareholder tasks pass moderated usability criteria | Research repository and decision record |
 | 2 | Architecture and accessible visual system | BBNC accepts one accessible direction and the contract threat model | Approved design-system and architecture release |

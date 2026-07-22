@@ -6,9 +6,12 @@
   "type": "module",
   "packageManager": "pnpm@10.34.4",
   "engines": {
-    "node": ">=22.12 <27"
+    "node": "24.x"
   },
   "scripts": {
+    "cloudflare:deploy": "wrangler deploy",
+    "cloudflare:dry-run": "pnpm build && wrangler deploy --dry-run",
+    "cloudflare:preview": "wrangler versions upload",
     "dev": "pnpm --filter @victoroff/site dev",
     "lint": "node scripts/lint.mjs",
     "typecheck": "pnpm -r --if-present typecheck",
@@ -24,6 +27,7 @@
     "@types/node": "24.1.0",
     "typescript": "5.8.3",
     "vite": "7.0.6",
-    "vitest": "3.2.4"
+    "vitest": "3.2.4",
+    "wrangler": "4.104.0"
   }
 }

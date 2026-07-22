@@ -1,4 +1,6 @@
 .DS_Store
+.pnpm-store/
+.wrangler/
 .vercel/
 node_modules/
 screenshots/

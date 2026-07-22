@@ -21,7 +21,7 @@ async function filesBelow(relativeRoot, suffixes) {
   return found;
 }
 
-const sourceFiles = await filesBelow("./", [".ts", ".mjs", ".html", ".css", ".json", ".yaml"]);
+const sourceFiles = await filesBelow("./", [".ts", ".mjs", ".html", ".css", ".json", ".jsonc", ".yaml"]);
 for (const path of sourceFiles) {
   const text = await readFile(path, "utf8");
   const rel = relative(rootPath, path);
@@ -93,9 +93,54 @@ for (const path of await filesBelow("./apps/site/src", [".ts"])) {
 const robots = await readFile(new URL("./apps/site/public/robots.txt", root), "utf8");
 if (!robots.includes("Disallow: /")) errors.push("apps/site/public/robots.txt: crawling must be disallowed");
 
+const packageJson = JSON.parse(await readFile(new URL("./package.json", root), "utf8"));
+if (packageJson.packageManager !== "pnpm@10.34.4") errors.push("package.json: pnpm must be pinned to 10.34.4");
+if (packageJson.engines?.node !== "24.x") errors.push("package.json: Node must be pinned to major 24");
+if (packageJson.devDependencies?.wrangler !== "4.104.0") errors.push("package.json: Wrangler must be pinned to 4.104.0");
+const nodeVersion = (await readFile(new URL("./.node-version", root), "utf8")).trim();
+if (nodeVersion !== "24") errors.push(".node-version: expected Node 24");
+
+const wrangler = JSON.parse(await readFile(new URL("./wrangler.jsonc", root), "utf8"));
+const allowedWranglerKeys = ["$schema", "assets", "compatibility_date", "name", "preview_urls", "workers_dev"];
+for (const key of Object.keys(wrangler)) {
+  if (!allowedWranglerKeys.includes(key)) errors.push(`wrangler.jsonc: runtime or binding key is forbidden: ${key}`);
+}
+if (wrangler.name !== "victoroff-os") errors.push("wrangler.jsonc: Worker name must be victoroff-os");
+if (wrangler.compatibility_date !== "2026-07-21") errors.push("wrangler.jsonc: compatibility date mismatch");
+if (wrangler.workers_dev !== true || wrangler.preview_urls !== true) {
+  errors.push("wrangler.jsonc: workers.dev and preview URLs must be enabled");
+}
+const expectedAssets = {
+  directory: "./dist/site",
+  not_found_handling: "none",
+  html_handling: "auto-trailing-slash",
+};
+if (JSON.stringify(wrangler.assets) !== JSON.stringify(expectedAssets)) {
+  errors.push("wrangler.jsonc: static asset boundary mismatch");
+}
+
+const cloudflareHeaders = await readFile(new URL("./apps/site/public/_headers", root), "utf8");
+for (const required of [
+  "/*",
+  "X-Robots-Tag: noindex, nofollow",
+  "X-Content-Type-Options: nosniff",
+  "Referrer-Policy: strict-origin-when-cross-origin",
+  "Permissions-Policy: camera=(), microphone=(), geolocation=()",
+]) {
+  if (!cloudflareHeaders.includes(required)) errors.push(`apps/site/public/_headers: missing ${required}`);
+}
+
 const vercel = JSON.parse(await readFile(new URL("./vercel.json", root), "utf8"));
 if (vercel.outputDirectory !== "dist/site") errors.push("vercel.json: public site must be the only deployed output");
-if (!JSON.stringify(vercel.headers).includes("noindex, nofollow")) errors.push("vercel.json: noindex header missing");
+const vercelHeaders = JSON.stringify(vercel.headers);
+for (const required of [
+  "noindex, nofollow",
+  "nosniff",
+  "strict-origin-when-cross-origin",
+  "camera=(), microphone=(), geolocation=()",
+]) {
+  if (!vercelHeaders.includes(required)) errors.push(`vercel.json: frozen rollback header missing ${required}`);
+}
 
 if (errors.length) {
   for (const error of errors) console.error(`FAIL: ${error}`);
