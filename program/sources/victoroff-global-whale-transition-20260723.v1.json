@@ -1,0 +1,67 @@
+{
+  "schema_version": "victoroff.source-lineage.v1",
+  "id": "victoroff-global-whale-transition-20260723",
+  "received_at": "2026-07-23",
+  "source_kind": "owner_provided_design_directive",
+  "raw_source_tracked": false,
+  "authority_disposition": "proposed_subordinate_design_invariant",
+  "governing_source_available": false,
+  "implementation_mode": "uncommissioned_synthetic_only",
+  "invariant": "Every meaningful internal movement between Victoroff interface spaces shall pass through the Global Whale Transition System",
+  "provider_owner": "WhaleTransitionProvider",
+  "variants": [
+    "standard",
+    "left-to-right",
+    "right-to-left",
+    "distant",
+    "close",
+    "tail-descent"
+  ],
+  "normal_timing_ms": {
+    "minimum": 700,
+    "target_minimum": 800,
+    "target_maximum": 900,
+    "maximum": 1000
+  },
+  "reduced_motion_timing_ms": {
+    "minimum": 150,
+    "maximum": 250
+  },
+  "slow_destination_behavior": "settled_water_hold_without_looping_whale",
+  "qualifying_navigation": [
+    "same-origin-page-route",
+    "browser-back",
+    "browser-forward"
+  ],
+  "excluded_interactions": [
+    "external-navigation",
+    "same-page-anchor",
+    "typing",
+    "dropdown",
+    "accordion",
+    "modal",
+    "form-control",
+    "minor-local-state"
+  ],
+  "accessibility_contract": [
+    "native-keyboard-navigation",
+    "native-browser-history",
+    "native-deep-links",
+    "destination-focus-restoration",
+    "route-announcement",
+    "accessibility-hidden-overlay"
+  ],
+  "performance_contract": [
+    "concurrent-destination-preload",
+    "nonblocking-asset-preload",
+    "transform-and-opacity-animation",
+    "dimensionally-stable-fixed-overlay",
+    "asset-failure-fallback"
+  ],
+  "current_route_evidence": "apps/site contains same-page anchors only; apps/os is absent",
+  "guardrails": [
+    "individual pages cannot implement, override, or duplicate transition behavior",
+    "the whale is passage between spaces and never a looping loading spinner",
+    "no deployment, DNS, custody, production, real-data, or representational authority is granted"
+  ]
+}

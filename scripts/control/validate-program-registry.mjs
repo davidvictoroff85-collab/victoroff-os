@@ -8,6 +8,10 @@ const intelligenceDirectiveUrl = new URL(
   "../../program/sources/victoroff-ai-master-directive-20260723.v1.json",
   import.meta.url,
 );
+const whaleDirectiveUrl = new URL(
+  "../../program/sources/victoroff-global-whale-transition-20260723.v1.json",
+  import.meta.url,
+);
 const tiersUrl = new URL("../../program/product/economic-agency-tiers.v1.json", import.meta.url);
 const financeUrl = new URL("../../program/product/embedded-finance-reservation.v1.json", import.meta.url);
 
@@ -310,6 +314,41 @@ export async function readIntelligenceDirective(url = intelligenceDirectiveUrl) 
   return JSON.parse(await readFile(url, "utf8"));
 }
 
+export async function readWhaleDirective(url = whaleDirectiveUrl) {
+  return JSON.parse(await readFile(url, "utf8"));
+}
+
+export function validateWhaleDirective(source) {
+  const errors = [];
+  const expect = (condition, message) => {
+    if (!condition) errors.push(message);
+  };
+
+  expect(source?.schema_version === "victoroff.source-lineage.v1", "whale directive source schema mismatch");
+  expect(source?.id === "victoroff-global-whale-transition-20260723", "whale directive source id mismatch");
+  expect(source?.raw_source_tracked === false, "raw whale directive must remain outside the tracked repository");
+  expect(source?.authority_disposition === "proposed_subordinate_design_invariant", "whale directive must remain subordinate");
+  expect(source?.governing_source_available === false, "unavailable governing whale source must remain explicit");
+  expect(source?.implementation_mode === "uncommissioned_synthetic_only", "whale implementation must remain synthetic");
+  expect(source?.provider_owner === "WhaleTransitionProvider", "whale transition must have one provider owner");
+  expect(
+    JSON.stringify(source?.variants) ===
+      JSON.stringify(["standard", "left-to-right", "right-to-left", "distant", "close", "tail-descent"]),
+    "whale variants must remain the six centrally controlled variants",
+  );
+  expect(source?.normal_timing_ms?.minimum === 700, "whale normal timing minimum must be 700ms");
+  expect(source?.normal_timing_ms?.target_minimum === 800, "whale target timing minimum must be 800ms");
+  expect(source?.normal_timing_ms?.target_maximum === 900, "whale target timing maximum must be 900ms");
+  expect(source?.normal_timing_ms?.maximum === 1000, "whale normal timing maximum must be 1000ms");
+  expect(source?.reduced_motion_timing_ms?.minimum === 150, "whale reduced timing minimum must be 150ms");
+  expect(source?.reduced_motion_timing_ms?.maximum === 250, "whale reduced timing maximum must be 250ms");
+  expect(source?.excluded_interactions?.includes("same-page-anchor"), "same-page anchors must remain immediate");
+  expect(source?.slow_destination_behavior === "settled_water_hold_without_looping_whale", "slow destinations must not loop the whale");
+  expect(source?.accessibility_contract?.includes("destination-focus-restoration"), "whale transition must restore destination focus");
+  expect(source?.performance_contract?.includes("nonblocking-asset-preload"), "whale assets must not block navigation");
+  return errors;
+}
+
 export function validateIntelligenceDirective(source) {
   const errors = [];
   const expect = (condition, message) => {
@@ -389,11 +428,13 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const schema = await readSchema();
   const contracts = await readBrainstormContracts();
   const intelligenceDirective = await readIntelligenceDirective();
+  const whaleDirective = await readWhaleDirective();
   const errors = [
     ...validateSchemaShape(registry, schema),
     ...validateRegistry(registry),
     ...validateBrainstormContracts(contracts),
     ...validateIntelligenceDirective(intelligenceDirective),
+    ...validateWhaleDirective(whaleDirective),
   ];
   if (errors.length > 0) {
     for (const error of errors) console.error(`FAIL: ${error}`);
