@@ -2,9 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   readBrainstormContracts,
+  readIntelligenceDirective,
   readRegistry,
   readSchema,
   validateBrainstormContracts,
+  validateIntelligenceDirective,
   validateRegistry,
   validateSchemaShape,
 } from "../../scripts/control/validate-program-registry.mjs";
@@ -18,6 +20,19 @@ test("the checked-in registry satisfies semantic controls", async () => {
 
 test("the brainstorm contracts preserve tier and finance boundaries", async () => {
   assert.deepEqual(validateBrainstormContracts(await readBrainstormContracts()), []);
+});
+
+test("the intelligence directive remains synthetic, subordinate, and provenance-first", async () => {
+  assert.deepEqual(validateIntelligenceDirective(await readIntelligenceDirective()), []);
+});
+
+test("the intelligence directive cannot invent constitutional availability or real-data authority", async () => {
+  const source = structuredClone(await readIntelligenceDirective());
+  source.governing_source_available = true;
+  source.real_bbnc_data_allowed = true;
+  const errors = validateIntelligenceDirective(source);
+  assert.ok(errors.some((error) => error.includes("missing Constitution source")));
+  assert.ok(errors.some((error) => error.includes("real_bbnc_data_allowed must be false")));
 });
 
 test("fabricated tier progress and premature finance production are rejected", async () => {
@@ -53,8 +68,12 @@ test("commercial custody cannot be invented", async () => {
 
 test("packet path collisions are rejected", async () => {
   const registry = structuredClone(await readRegistry());
-  registry.work_packets.find((packet) => packet.id === "VIC-DOMAIN-001").allowed_paths = ["packages/contracts/**"];
-  registry.work_packets.find((packet) => packet.id === "VIC-DOMAIN-001").owner = "victoroff-contracts";
+  const contract = registry.work_packets.find((packet) => packet.id === "VIC-CONTRACT-001");
+  const domain = registry.work_packets.find((packet) => packet.id === "VIC-DOMAIN-001");
+  contract.state = "ready";
+  domain.state = "ready";
+  domain.allowed_paths = ["packages/contracts/**"];
+  domain.owner = "victoroff-contracts";
   const errors = validateRegistry(registry);
   assert.ok(errors.some((error) => error.includes("VIC-CONTRACT-001 and VIC-DOMAIN-001")));
 });
@@ -88,5 +107,34 @@ test("the contracts canary predicate runs tests before typechecking", async () =
   assert.equal(
     packet.predicate,
     "pnpm --filter @victoroff/contracts test && pnpm --filter @victoroff/contracts typecheck",
+  );
+});
+
+test("merged canaries and the first institutional intelligence dependency chain are reconciled", async () => {
+  const registry = await readRegistry();
+  for (const id of ["VIC-GOV-001", "VIC-CONTRACT-001", "VIC-DOMAIN-001", "VIC-INTEL-CONTROL-001"]) {
+    assert.equal(registry.work_packets.find((packet) => packet.id === id)?.state, "done");
+  }
+  assert.deepEqual(
+    ["VIC-GOV-001", "VIC-CONTRACT-001", "VIC-DOMAIN-001"].map(
+      (id) => registry.work_packets.find((packet) => packet.id === id)?.receipt_target,
+    ),
+    [
+      "github://organvm/victoroff-os/pulls/18",
+      "github://organvm/victoroff-os/pulls/19",
+      "github://organvm/victoroff-os/pulls/20",
+    ],
+  );
+  assert.deepEqual(
+    registry.work_packets.find((packet) => packet.id === "VIC-INTEL-DOCS-001")?.dependencies,
+    ["VIC-INTEL-CONTROL-001"],
+  );
+  assert.deepEqual(
+    registry.work_packets.find((packet) => packet.id === "VIC-INTEL-CONTRACTS-001")?.dependencies,
+    ["VIC-INTEL-DOCS-001"],
+  );
+  assert.deepEqual(
+    registry.work_packets.find((packet) => packet.id === "VIC-INTEL-PERSISTENCE-001")?.dependencies,
+    ["VIC-INTEL-CONTRACTS-001"],
   );
 });

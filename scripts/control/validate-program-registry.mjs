@@ -4,6 +4,10 @@ import { fileURLToPath } from "node:url";
 const registryUrl = new URL("../../program/registry.v1.json", import.meta.url);
 const schemaUrl = new URL("../../packages/contracts/schemas/victoroff-program.v1.schema.json", import.meta.url);
 const sourceUrl = new URL("../../program/sources/victoroff-brainstorm-20260722-tier-finance.v1.json", import.meta.url);
+const intelligenceDirectiveUrl = new URL(
+  "../../program/sources/victoroff-ai-master-directive-20260723.v1.json",
+  import.meta.url,
+);
 const tiersUrl = new URL("../../program/product/economic-agency-tiers.v1.json", import.meta.url);
 const financeUrl = new URL("../../program/product/embedded-finance-reservation.v1.json", import.meta.url);
 
@@ -302,6 +306,46 @@ export async function readBrainstormContracts() {
   return { source, tiers, finance };
 }
 
+export async function readIntelligenceDirective(url = intelligenceDirectiveUrl) {
+  return JSON.parse(await readFile(url, "utf8"));
+}
+
+export function validateIntelligenceDirective(source) {
+  const errors = [];
+  const expect = (condition, message) => {
+    if (!condition) errors.push(message);
+  };
+
+  expect(source?.schema_version === "victoroff.source-lineage.v1", "intelligence directive source schema mismatch");
+  expect(source?.id === "victoroff-ai-master-directive-20260723", "intelligence directive source id mismatch");
+  expect(source?.raw_source_tracked === false, "raw intelligence directive must remain outside the tracked repository");
+  expect(source?.authority_disposition === "proposed_subordinate_architecture", "intelligence directive must remain subordinate");
+  expect(source?.governing_source_available === false, "missing Constitution source must remain explicit");
+  expect(source?.implementation_mode === "uncommissioned_synthetic_only", "intelligence implementation must remain synthetic");
+  for (const field of ["real_bbnc_data_allowed", "real_bbnc_identity_allowed", "representation_allowed"]) {
+    expect(source?.[field] === false, "intelligence directive " + field + " must be false");
+  }
+  expect(
+    JSON.stringify(source?.intelligence_domains) ===
+      JSON.stringify(["bbnc", "pedro-bay", "regional-corporation", "village-corporation", "foundation-nonprofit"]),
+    "intelligence domains must remain the five ordered shared domains",
+  );
+  expect(
+    JSON.stringify(source?.required_documents) ===
+      JSON.stringify([
+        "docs/current-state.md",
+        "docs/target-architecture.md",
+        "docs/gap-analysis.md",
+        "docs/implementation-plan.md",
+      ]),
+    "intelligence directive must retain the four required architecture documents",
+  );
+  expect(source?.required_model_capabilities?.includes("provenance"), "intelligence model must require provenance");
+  expect(source?.required_model_capabilities?.includes("contradictions"), "intelligence model must retain contradictions");
+  expect(source?.required_model_capabilities?.includes("permissions"), "intelligence model must require permissions");
+  return errors;
+}
+
 export function validateBrainstormContracts({ source, tiers, finance }) {
   const errors = [];
   const expect = (condition, message) => {
@@ -344,10 +388,12 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const registry = await readRegistry();
   const schema = await readSchema();
   const contracts = await readBrainstormContracts();
+  const intelligenceDirective = await readIntelligenceDirective();
   const errors = [
     ...validateSchemaShape(registry, schema),
     ...validateRegistry(registry),
     ...validateBrainstormContracts(contracts),
+    ...validateIntelligenceDirective(intelligenceDirective),
   ];
   if (errors.length > 0) {
     for (const error of errors) console.error(`FAIL: ${error}`);

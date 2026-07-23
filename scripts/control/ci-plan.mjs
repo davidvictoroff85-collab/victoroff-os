@@ -30,7 +30,17 @@ export function classifyChangedFiles(files) {
       scopes.control = true;
     }
 
-    if (path.startsWith("docs/governance/") || path.startsWith("docs/finance/")) {
+    if (
+      path.startsWith("docs/governance/") ||
+      path.startsWith("docs/finance/") ||
+      path.startsWith("docs/adr/") ||
+      [
+        "docs/current-state.md",
+        "docs/target-architecture.md",
+        "docs/gap-analysis.md",
+        "docs/implementation-plan.md",
+      ].includes(path)
+    ) {
       scopes.docs = true;
     }
 
