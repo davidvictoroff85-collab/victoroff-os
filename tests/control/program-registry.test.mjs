@@ -150,6 +150,11 @@ test("merged canaries and the first institutional intelligence dependency chain 
     registry.work_packets.find((packet) => packet.id === "VIC-WHALE-ENGINE-001")?.dependencies,
     ["VIC-INTEL-DOCS-001"],
   );
+  assert.equal(registry.work_packets.find((packet) => packet.id === "VIC-WHALE-ENGINE-001")?.state, "done");
+  assert.equal(
+    registry.work_packets.find((packet) => packet.id === "VIC-WHALE-ENGINE-001")?.receipt_target,
+    "github://organvm/victoroff-os/pulls/24",
+  );
   assert.deepEqual(
     registry.work_packets.find((packet) => packet.id === "VIC-INTEL-DOCS-001")?.dependencies,
     ["VIC-INTEL-CONTROL-001"],
