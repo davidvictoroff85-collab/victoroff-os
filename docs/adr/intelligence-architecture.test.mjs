@@ -13,6 +13,7 @@ const adrUrls = [
   new URL("./0001-unified-institutional-model.md", import.meta.url),
   new URL("./0002-sqlite-first-retrieval.md", import.meta.url),
   new URL("./0003-ai-evidence-and-authority-boundary.md", import.meta.url),
+  new URL("./0004-global-whale-transition-system.md", import.meta.url),
 ];
 
 async function text(url) {
@@ -79,4 +80,30 @@ test("all architecture decisions remain proposed and authority-bounded", async (
     assert.match(body, /Status: proposed/);
     assert.match(body, /authority|permission/i);
   }
+});
+
+test("the global whale transition is singular, bounded, and accessible", async () => {
+  const target = await text(new URL("../target-architecture.md", import.meta.url));
+  const decision = await text(new URL("./0004-global-whale-transition-system.md", import.meta.url));
+  const normalized = (target + " " + decision).replace(/\s+/g, " ");
+
+  assert.match(normalized, /WhaleTransitionProvider wraps the internal application router once/i);
+  assert.match(normalized, /individual pages (shall not|cannot) implement, override, or duplicate/i);
+  for (const variant of [
+    "standard",
+    "left-to-right",
+    "right-to-left",
+    "distant",
+    "close",
+    "tail descent",
+  ]) {
+    assert.ok(normalized.includes(variant), "missing transition variant " + variant);
+  }
+  assert.match(normalized, /800–900 milliseconds.*700–1000 millisecond/i);
+  assert.match(normalized, /150–250 millisecond/i);
+  assert.match(normalized, /same-page anchors.*immediate/i);
+  assert.match(normalized, /settled water.*without looping/i);
+  assert.match(normalized, /back and forward.*without (creating|adding).*history entr/i);
+  assert.match(normalized, /restores? focus.*destination/i);
+  assert.match(normalized, /route loading never (waits|blocks) on animation downloads/i);
 });

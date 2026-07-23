@@ -103,9 +103,16 @@ Proposed packets for services/api and apps/os; register after Phase 5 with disti
 - Add progressive workspaces for Ask Victoroff, Search, People, Organizations, Relationships,
   Documents, Programmes, Projects, Calendar, Tasks, and domain lenses.
 - Support answer -> claim -> source -> underlying record inspection.
+- Wrap the internal router once with WhaleTransitionProvider. It centrally owns navigation
+  qualification, concurrent preload, controlled variants, masked route commitment, loading hold,
+  reveal, native history, route announcements, focus restoration, and reduced motion.
+- Keep same-page anchors and local interactions immediate. No page may implement, override, or
+  duplicate navigation-transition behavior.
 
 Predicate: exact-revision command tests, server authorization tests, evidence-navigation end-to-end
-tests, loading/empty/error states, accessibility, and no primary-navigation governance leakage.
+tests, loading/empty/error states, accessibility, no primary-navigation governance leakage, and the
+ADR 0004 transition verification contract. Register the transition engine as a single-owner packet
+only after the internal router boundary exists; do not collide with active packages/ui owners.
 
 ## Phase 7 — Evidence-backed AI
 

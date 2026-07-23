@@ -22,6 +22,8 @@ canonical entity may participate in several domains without duplication.
    ambiguous entity, invent authority, or write verified institutional truth.
 8. Public, synthetic, internal, restricted, and future regulated information remain explicit
    classifications. The current mode permits public/synthetic data only.
+9. Every meaningful internal route movement passes through one Global Whale Transition System;
+   individual pages cannot implement, override, or duplicate page-transition behavior.
 
 ## Logical layers
 
@@ -35,6 +37,25 @@ canonical entity may participate in several domains without duplication.
   workspaces, not competing home screens.
 - Governance -> Constitution exposes the complete inspectable authority chain when an authorized
   governing source exists.
+
+### Global navigation transition
+
+WhaleTransitionProvider wraps the internal application router once. It owns qualification,
+preloading, transition state, centrally selected variants, route commitment, destination reveal,
+history behavior, focus restoration, route announcements, and reduced-motion behavior. The six
+controlled variants are standard, left-to-right, right-to-left, distant, close, and tail descent.
+
+Normal motion targets 800–900 milliseconds within a hard 700–1000 millisecond envelope. Destination
+loading begins immediately beneath the overlay. A slow destination holds on still, settled water
+without looping the whale. Reduced motion uses the same route lifecycle with a 150–250 millisecond
+water-line and opacity treatment.
+
+The system qualifies same-origin page-to-page route changes, including back and forward movements
+without adding history entries. It excludes external navigation, same-page anchors, modified clicks,
+downloads, new-window targets, typing, dropdowns, accordions, modals, controls, filters, and minor
+local state changes. The overlay is accessibility-hidden, never traps focus, and restores focus to
+the destination landmark before announcing the new route. Assets are opportunistically preloaded;
+route loading never blocks on animation downloads. ADR 0004 defines the executable contract.
 
 ### Command and query boundary
 

@@ -19,6 +19,7 @@ authority and custody predicates release a narrower mode.
 | P2 | Search | No structured, full-text, semantic, or graph search | Permission-filtered structured queries, SQLite FTS5, and bounded graph traversal behind one retrieval interface | Search relevance and restricted-data tests |
 | P2 | Ingestion | Static hand-written fixtures only | Connector interface, raw-source custody, extraction, normalization, claim staging, entity suggestions, review, and publication states | Idempotency and replay tests with approved synthetic fixtures |
 | P2 | Internal application | apps/os and services/api are absent | Seven-intent internal front door, evidence views, record inspection, and command/query API | Critical journey end-to-end tests |
+| P2 | Global navigation transition | No internal router or qualifying page-to-page transitions; the public site uses same-page anchors | One router-level WhaleTransitionProvider with centralized variants, concurrent preload, native history/focus behavior, loading hold, and reduced-motion fallback | Qualification, timing, history, focus, loading, asset-failure, and reduced-motion tests |
 | P3 | AI answers | No model integration | Retrieval-first evidence envelope, claim-level citations, fact/inference separation, uncertainty, contradiction display, and no authoritative writes | Grounding and prompt-injection tests |
 | P3 | Change detection | Source expiry exists only for public actions | Source snapshots, material diffs, stale-source queues, and user review checkpoints | Deterministic change-detection tests |
 | P3 | Calendar and email | No adapters | Permission-scoped adapter ports and normalized operational records; no live credentials until separately authorized | Contract tests with synthetic adapters |
@@ -54,6 +55,12 @@ must be checked again before response delivery.
 
 An incorrect merge can corrupt every relationship and historical answer. High-impact or ambiguous
 matches require review, preserve both source records, and produce reversible merge decisions.
+
+### Page-owned transition drift
+
+Per-page animation would fragment history, focus, timing, and reduced-motion behavior. The whale
+transition must remain a router-level service with centrally controlled variants. Existing same-page
+anchors are explicitly outside its scope and must remain immediate.
 
 ## Dependency conclusion
 
