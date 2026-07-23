@@ -546,7 +546,7 @@
       "objective": "Implement the reusable Global Whale Transition engine, visual layer, centralized variants, native history and focus behavior, loading hold, asset fallback, and reduced motion",
       "owner": "victoroff-interface-transition",
       "target_agent": "codex",
-      "state": "ready",
+      "state": "done",
       "integration_packet": false,
       "allowed_paths": [
         "packages/ui/src/index.ts",
@@ -556,7 +556,7 @@
       "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
       "dependencies": ["VIC-INTEL-DOCS-001"],
       "predicate": "pnpm exec vitest run packages/ui/src/whale-transition/*.test.ts && pnpm --filter @victoroff/ui typecheck && pnpm --filter @victoroff/ui build",
-      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-WHALE-ENGINE-001"
+      "receipt_target": "github://organvm/victoroff-os/pulls/24"
     },
     {
       "id": "VIC-INTEL-CONTRACTS-001",
