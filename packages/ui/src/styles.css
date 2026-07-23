@@ -121,3 +121,175 @@ button,
     scroll-behavior: auto;
   }
 }
+
+.victoroff-whale-transition {
+  --whale-origin-x: 50%;
+  --whale-peak-x: 50%;
+  --whale-scale: 1;
+  position: fixed;
+  z-index: 2147483000;
+  inset: 0;
+  contain: layout paint style;
+  isolation: isolate;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.victoroff-whale-transition[hidden] {
+  display: none;
+}
+
+.victoroff-whale-transition__veil {
+  position: absolute;
+  inset: 0;
+  background: rgb(255 255 255 / 0.96);
+  opacity: 0;
+  transition: opacity 140ms linear;
+}
+
+.victoroff-whale-transition__water {
+  position: absolute;
+  right: -4vw;
+  bottom: -2px;
+  left: -4vw;
+  height: 44vh;
+  min-height: 15rem;
+  background: var(--black);
+  transform: translate3d(0, 105%, 0);
+  transition: transform 180ms cubic-bezier(0.32, 0, 0.18, 1);
+  will-change: transform;
+}
+
+.victoroff-whale-transition__water span {
+  position: absolute;
+  top: 0;
+  width: 38%;
+  height: 1px;
+  background: var(--black);
+}
+
+.victoroff-whale-transition__water span:nth-child(1) {
+  left: 2%;
+  transform: translate3d(0, -9px, 0);
+}
+
+.victoroff-whale-transition__water span:nth-child(2) {
+  left: 34%;
+  transform: translate3d(0, -4px, 0);
+}
+
+.victoroff-whale-transition__water span:nth-child(3) {
+  right: 1%;
+  transform: translate3d(0, -13px, 0);
+}
+
+.victoroff-whale-transition__whale {
+  position: absolute;
+  z-index: 1;
+  bottom: 10vh;
+  left: var(--whale-origin-x);
+  width: min(31rem, 68vw);
+  color: var(--black);
+  opacity: 0;
+  transform: translate3d(-50%, 68vh, 0) rotate(-9deg) scale(var(--whale-scale));
+  transform-origin: 50% 70%;
+  transition:
+    transform 240ms cubic-bezier(0.22, 0.68, 0.2, 1),
+    opacity 120ms linear;
+  will-change: transform, opacity;
+}
+
+.victoroff-whale-transition__whale svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+
+.victoroff-whale-transition[data-variant="left-to-right"] {
+  --whale-origin-x: 28%;
+  --whale-peak-x: 58%;
+}
+
+.victoroff-whale-transition[data-variant="right-to-left"] {
+  --whale-origin-x: 72%;
+  --whale-peak-x: 42%;
+}
+
+.victoroff-whale-transition[data-variant="distant"] {
+  --whale-scale: 0.62;
+}
+
+.victoroff-whale-transition[data-variant="close"] {
+  --whale-scale: 1.34;
+}
+
+.victoroff-whale-transition[data-phase="water-rising"] .victoroff-whale-transition__veil,
+.victoroff-whale-transition[data-phase="breaching"] .victoroff-whale-transition__veil,
+.victoroff-whale-transition[data-phase="masked"] .victoroff-whale-transition__veil,
+.victoroff-whale-transition[data-phase="descending"] .victoroff-whale-transition__veil,
+.victoroff-whale-transition[data-phase="settling"] .victoroff-whale-transition__veil,
+.victoroff-whale-transition[data-phase="loading-hold"] .victoroff-whale-transition__veil {
+  opacity: 1;
+}
+
+.victoroff-whale-transition[data-phase="water-rising"] .victoroff-whale-transition__water,
+.victoroff-whale-transition[data-phase="breaching"] .victoroff-whale-transition__water,
+.victoroff-whale-transition[data-phase="masked"] .victoroff-whale-transition__water,
+.victoroff-whale-transition[data-phase="descending"] .victoroff-whale-transition__water,
+.victoroff-whale-transition[data-phase="settling"] .victoroff-whale-transition__water,
+.victoroff-whale-transition[data-phase="loading-hold"] .victoroff-whale-transition__water {
+  transform: translate3d(0, 0, 0);
+}
+
+.victoroff-whale-transition[data-phase="breaching"] .victoroff-whale-transition__whale,
+.victoroff-whale-transition[data-phase="masked"] .victoroff-whale-transition__whale {
+  left: var(--whale-peak-x);
+  opacity: 1;
+  transform: translate3d(-50%, -22vh, 0) rotate(7deg) scale(var(--whale-scale));
+}
+
+.victoroff-whale-transition[data-variant="right-to-left"][data-phase="breaching"] .victoroff-whale-transition__whale,
+.victoroff-whale-transition[data-variant="right-to-left"][data-phase="masked"] .victoroff-whale-transition__whale {
+  transform: translate3d(-50%, -22vh, 0) rotate(-7deg) scale(var(--whale-scale)) scaleX(-1);
+}
+
+.victoroff-whale-transition[data-phase="descending"] .victoroff-whale-transition__whale {
+  left: var(--whale-peak-x);
+  opacity: 1;
+  transform: translate3d(-50%, 47vh, 0) rotate(18deg) scale(var(--whale-scale));
+}
+
+.victoroff-whale-transition[data-variant="tail-descent"][data-phase="descending"] .victoroff-whale-transition__whale {
+  transform: translate3d(-50%, 34vh, 0) rotate(72deg) scale(0.82);
+}
+
+.victoroff-whale-transition[data-phase="revealing"] .victoroff-whale-transition__veil,
+.victoroff-whale-transition[data-phase="revealing"] .victoroff-whale-transition__water {
+  opacity: 0;
+  transform: translate3d(0, 22%, 0);
+}
+
+.victoroff-whale-transition[data-reduced-motion="true"] .victoroff-whale-transition__whale {
+  display: none;
+}
+
+.victoroff-whale-transition[data-reduced-motion="true"] .victoroff-whale-transition__water {
+  height: 2px;
+  min-height: 0;
+  transition-duration: 80ms;
+}
+
+.victoroff-whale-transition[data-reduced-motion="true"] .victoroff-whale-transition__veil {
+  transition-duration: 80ms;
+}
+
+@media (max-width: 44rem) {
+  .victoroff-whale-transition__whale {
+    width: min(25rem, 82vw);
+  }
+
+  .victoroff-whale-transition__water {
+    height: 38vh;
+  }
+}

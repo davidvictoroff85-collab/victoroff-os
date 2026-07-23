@@ -36,3 +36,5 @@ export function activateTabs(options: TabOptions): (id: string, focus?: boolean)
   select(options.selectedId);
   return select;
 }
+
+export * from "./whale-transition";
