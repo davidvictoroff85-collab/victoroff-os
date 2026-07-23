@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://victoroffgroup.com/contracts/governance-document.v1.schema.json",
+  "title": "Governance Document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "documentId",
+    "title",
+    "version",
+    "status",
+    "effectiveDate",
+    "sections",
+    "classification"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "governance-document.v1"
+    },
+    "documentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["draft", "active", "superseded", "archived"]
+    },
+    "effectiveDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sectionId", "title", "content"],
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "classification": {
+      "const": "public"
+    }
+  }
+}

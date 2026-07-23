@@ -70,3 +70,53 @@ export interface WithdrawalTombstoneV1 {
 
 export type PublicationPackageUnsigned = Omit<PublicationPackageV1, "signature">;
 export type WithdrawalTombstoneUnsigned = Omit<WithdrawalTombstoneV1, "signature">;
+
+export interface GovernanceDocumentSectionV1 {
+  sectionId: string;
+  title: string;
+  content: string;
+}
+
+export interface GovernanceDocumentV1 {
+  schemaVersion: "governance-document.v1";
+  documentId: string;
+  title: string;
+  version: string;
+  status: "draft" | "active" | "superseded" | "archived";
+  effectiveDate: string;
+  sections: GovernanceDocumentSectionV1[];
+  classification: PublicClassification;
+}
+
+export interface ActionIntentV1 {
+  schemaVersion: "action-intent.v1";
+  intentId: string;
+  actionId: string;
+  shareholderId: string;
+  status: "pending" | "processing" | "completed" | "failed" | "cancelled";
+  submittedAt: string;
+  payload: Record<string, unknown>;
+}
+
+export interface GovernanceResolutionV1 {
+  schemaVersion: "governance-resolution.v1";
+  resolutionId: string;
+  title: string;
+  description: string;
+  proposedBy: string;
+  status: "proposed" | "voting" | "passed" | "rejected" | "withdrawn";
+  proposedAt: string;
+  passedAt?: string;
+  classification: PublicClassification;
+}
+
+export interface DeliveryCheckpointV1 {
+  schemaVersion: "delivery-checkpoint.v1";
+  checkpointId: string;
+  title: string;
+  claim: "open" | "provisional_verified" | "authority_held" | "verified";
+  status: "pending" | "in_progress" | "completed";
+  updatedAt: string;
+}
+
+export * from "./validation.js";

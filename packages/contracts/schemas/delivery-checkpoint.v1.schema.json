@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://victoroffgroup.com/contracts/delivery-checkpoint.v1.schema.json",
+  "title": "Delivery Checkpoint",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "checkpointId",
+    "title",
+    "claim",
+    "status",
+    "updatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "delivery-checkpoint.v1"
+    },
+    "checkpointId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim": {
+      "enum": ["open", "provisional_verified", "authority_held", "verified"]
+    },
+    "status": {
+      "enum": ["pending", "in_progress", "completed"]
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
