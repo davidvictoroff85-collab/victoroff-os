@@ -46,6 +46,11 @@
       "id": "victoroff-brainstorm-20260722-tier-finance",
       "record": "program/sources/victoroff-brainstorm-20260722-tier-finance.v1.json",
       "disposition": "folded_with_authority_and_evidence_guards"
+    },
+    {
+      "id": "victoroff-ai-master-directive-20260723",
+      "record": "program/sources/victoroff-ai-master-directive-20260723.v1.json",
+      "disposition": "accepted_as_proposed_subordinate_architecture_under_existing_authority_holds"
     }
   ],
   "product_extensions": [
@@ -185,6 +190,17 @@
       "id": "finance-architecture",
       "owner": "victoroff-finance-architecture",
       "patterns": ["docs/finance/**"]
+    },
+    {
+      "id": "institutional-intelligence-architecture",
+      "owner": "victoroff-intelligence-architecture",
+      "patterns": [
+        "docs/current-state.md",
+        "docs/target-architecture.md",
+        "docs/gap-analysis.md",
+        "docs/implementation-plan.md",
+        "docs/adr/**"
+      ]
     }
   ],
   "gates": [
@@ -419,39 +435,39 @@
       "objective": "Create the classified governance-source manifest with provenance, checksums, and missing-source failures",
       "owner": "victoroff-governance",
       "target_agent": "jules",
-      "state": "blocked",
+      "state": "done",
       "integration_packet": false,
       "allowed_paths": ["docs/governance/**"],
       "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
       "dependencies": ["control-main-green"],
       "predicate": "node --test docs/governance/*.test.mjs",
-      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-GOV-001"
+      "receipt_target": "github://organvm/victoroff-os/pulls/18"
     },
     {
       "id": "VIC-CONTRACT-001",
       "objective": "Add schemas and tests for GovernanceDocument, ActionIntent, GovernanceResolution, and delivery checkpoints",
       "owner": "victoroff-contracts",
       "target_agent": "jules",
-      "state": "blocked",
+      "state": "done",
       "integration_packet": false,
       "allowed_paths": ["packages/contracts/**"],
       "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
       "dependencies": ["control-main-green"],
       "predicate": "pnpm --filter @victoroff/contracts test && pnpm --filter @victoroff/contracts typecheck",
-      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-CONTRACT-001"
+      "receipt_target": "github://organvm/victoroff-os/pulls/19"
     },
     {
       "id": "VIC-DOMAIN-001",
       "objective": "Implement deterministic seven-intent resolver fixtures, precedence, ambiguity, conflicts, and tests",
       "owner": "victoroff-domain",
       "target_agent": "jules",
-      "state": "blocked",
+      "state": "done",
       "integration_packet": false,
       "allowed_paths": ["packages/domain/**"],
       "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
       "dependencies": ["control-main-green"],
       "predicate": "pnpm --filter @victoroff/domain test",
-      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-DOMAIN-001"
+      "receipt_target": "github://organvm/victoroff-os/pulls/20"
     },
     {
       "id": "VIC-TIER-001",
@@ -478,6 +494,64 @@
       "dependencies": ["VIC-TIER-001"],
       "predicate": "node --test docs/finance/*.test.mjs",
       "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-FINANCE-001"
+    },
+    {
+      "id": "VIC-INTEL-CONTROL-001",
+      "objective": "Reconcile merged canary receipts and register the synthetic Victoroff.ai architecture lane without inventing constitutional authority",
+      "owner": "victoroff-control-integrator",
+      "target_agent": "codex",
+      "state": "done",
+      "integration_packet": false,
+      "allowed_paths": ["program/**", "scripts/control/**", "tests/control/**", "docs/program/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["control-main-green"],
+      "predicate": "pnpm verify:control",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-INTEL-CONTROL-001"
+    },
+    {
+      "id": "VIC-INTEL-DOCS-001",
+      "objective": "Produce the repository-grounded current state, target architecture, gap analysis, implementation plan, and authority-safe ADRs for Victoroff.ai",
+      "owner": "victoroff-intelligence-architecture",
+      "target_agent": "codex",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": [
+        "docs/current-state.md",
+        "docs/target-architecture.md",
+        "docs/gap-analysis.md",
+        "docs/implementation-plan.md",
+        "docs/adr/**"
+      ],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["VIC-INTEL-CONTROL-001"],
+      "predicate": "node --test docs/adr/*.test.mjs",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-INTEL-DOCS-001"
+    },
+    {
+      "id": "VIC-INTEL-CONTRACTS-001",
+      "objective": "Define canonical synthetic institutional entities, first-class relationships, sources, claims, provenance, contradictions, and entity-resolution review contracts",
+      "owner": "victoroff-contracts",
+      "target_agent": "codex",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["packages/contracts/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["VIC-INTEL-DOCS-001"],
+      "predicate": "pnpm --filter @victoroff/contracts test && pnpm --filter @victoroff/contracts typecheck",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-INTEL-CONTRACTS-001"
+    },
+    {
+      "id": "VIC-INTEL-PERSISTENCE-001",
+      "objective": "Implement repository ports and a local SQLite reference for the canonical synthetic institutional model with migration and isolation tests",
+      "owner": "victoroff-persistence",
+      "target_agent": "codex",
+      "state": "blocked",
+      "integration_packet": false,
+      "allowed_paths": ["packages/persistence/**"],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["VIC-INTEL-CONTRACTS-001"],
+      "predicate": "pnpm --filter @victoroff/persistence test && pnpm --filter @victoroff/persistence typecheck",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-INTEL-PERSISTENCE-001"
     }
   ],
   "jules_campaign": {

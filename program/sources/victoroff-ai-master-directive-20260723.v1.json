@@ -1,0 +1,47 @@
+{
+  "schema_version": "victoroff.source-lineage.v1",
+  "id": "victoroff-ai-master-directive-20260723",
+  "received_at": "2026-07-23",
+  "source_kind": "owner_provided_build_directive",
+  "raw_source_tracked": false,
+  "authority_disposition": "proposed_subordinate_architecture",
+  "asserted_supreme_authority": "Victoroff Constitution v1.0.0",
+  "governing_source_available": false,
+  "implementation_mode": "uncommissioned_synthetic_only",
+  "real_bbnc_data_allowed": false,
+  "real_bbnc_identity_allowed": false,
+  "representation_allowed": false,
+  "product_rule": "complex governance underneath; simple actions on top",
+  "intelligence_domains": [
+    "bbnc",
+    "pedro-bay",
+    "regional-corporation",
+    "village-corporation",
+    "foundation-nonprofit"
+  ],
+  "required_documents": [
+    "docs/current-state.md",
+    "docs/target-architecture.md",
+    "docs/gap-analysis.md",
+    "docs/implementation-plan.md"
+  ],
+  "required_model_capabilities": [
+    "canonical-entities",
+    "first-class-relationships",
+    "sources",
+    "claims",
+    "provenance",
+    "contradictions",
+    "entity-resolution",
+    "permissions",
+    "audit"
+  ],
+  "guardrails": [
+    "AI may suggest or explain but cannot approve, release, or invent governing authority",
+    "deterministic code resolves governing authority",
+    "important claims remain inspectable through source and provenance",
+    "high-impact ambiguous entity merges require review",
+    "server-side authorization filters retrieval",
+    "no production, custody, DNS, deployment, or real-data action is authorized"
+  ]
+}

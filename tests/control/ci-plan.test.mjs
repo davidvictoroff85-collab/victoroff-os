@@ -44,6 +44,24 @@ test("governance and finance test files run the dedicated docs shard", () => {
   }
 });
 
+test("institutional intelligence architecture documents run the dedicated docs shard", () => {
+  for (const path of [
+    "docs/current-state.md",
+    "docs/target-architecture.md",
+    "docs/gap-analysis.md",
+    "docs/implementation-plan.md",
+    "docs/adr/0001-canonical-institutional-model.md",
+  ]) {
+    assert.deepEqual(classifyChangedFiles([path]), {
+      control: false,
+      docs: true,
+      code: false,
+      browser: false,
+      release: false,
+    });
+  }
+});
+
 test("a nonempty unclassified diff fails closed in the plan", () => {
   assert.deepEqual(planChangedFiles(["unowned/new-surface.txt"]).unclassified, ["unowned/new-surface.txt"]);
   assert.deepEqual(planChangedFiles(["docs/research/new-surface.md"]).unclassified, ["docs/research/new-surface.md"]);
