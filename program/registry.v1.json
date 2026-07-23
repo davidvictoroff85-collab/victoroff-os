@@ -51,6 +51,11 @@
       "id": "victoroff-ai-master-directive-20260723",
       "record": "program/sources/victoroff-ai-master-directive-20260723.v1.json",
       "disposition": "accepted_as_proposed_subordinate_architecture_under_existing_authority_holds"
+    },
+    {
+      "id": "victoroff-global-whale-transition-20260723",
+      "record": "program/sources/victoroff-global-whale-transition-20260723.v1.json",
+      "disposition": "accepted_as_proposed_subordinate_design_invariant_under_existing_authority_holds"
     }
   ],
   "product_extensions": [
@@ -200,6 +205,15 @@
         "docs/gap-analysis.md",
         "docs/implementation-plan.md",
         "docs/adr/**"
+      ]
+    },
+    {
+      "id": "interface-transition-engine",
+      "owner": "victoroff-interface-transition",
+      "patterns": [
+        "packages/ui/src/index.ts",
+        "packages/ui/src/styles.css",
+        "packages/ui/src/whale-transition/**"
       ]
     }
   ],
@@ -513,7 +527,7 @@
       "objective": "Produce the repository-grounded current state, target architecture, gap analysis, implementation plan, and authority-safe ADRs for Victoroff.ai",
       "owner": "victoroff-intelligence-architecture",
       "target_agent": "codex",
-      "state": "blocked",
+      "state": "done",
       "integration_packet": false,
       "allowed_paths": [
         "docs/current-state.md",
@@ -525,7 +539,24 @@
       "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
       "dependencies": ["VIC-INTEL-CONTROL-001"],
       "predicate": "node --test docs/adr/*.test.mjs",
-      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-INTEL-DOCS-001"
+      "receipt_target": "github://organvm/victoroff-os/pulls/22"
+    },
+    {
+      "id": "VIC-WHALE-ENGINE-001",
+      "objective": "Implement the reusable Global Whale Transition engine, visual layer, centralized variants, native history and focus behavior, loading hold, asset fallback, and reduced motion",
+      "owner": "victoroff-interface-transition",
+      "target_agent": "codex",
+      "state": "ready",
+      "integration_packet": false,
+      "allowed_paths": [
+        "packages/ui/src/index.ts",
+        "packages/ui/src/styles.css",
+        "packages/ui/src/whale-transition/**"
+      ],
+      "forbidden_paths": ["tasks.yaml", "AGENTS.md", ".github/**", "package.json", "pnpm-lock.yaml"],
+      "dependencies": ["VIC-INTEL-DOCS-001"],
+      "predicate": "pnpm exec vitest run packages/ui/src/whale-transition/*.test.ts && pnpm --filter @victoroff/ui typecheck && pnpm --filter @victoroff/ui build",
+      "receipt_target": "github://organvm/victoroff-os/pulls?packet=VIC-WHALE-ENGINE-001"
     },
     {
       "id": "VIC-INTEL-CONTRACTS-001",

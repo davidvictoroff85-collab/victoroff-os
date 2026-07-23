@@ -3,10 +3,12 @@ import assert from "node:assert/strict";
 import {
   readBrainstormContracts,
   readIntelligenceDirective,
+  readWhaleDirective,
   readRegistry,
   readSchema,
   validateBrainstormContracts,
   validateIntelligenceDirective,
+  validateWhaleDirective,
   validateRegistry,
   validateSchemaShape,
 } from "../../scripts/control/validate-program-registry.mjs";
@@ -33,6 +35,21 @@ test("the intelligence directive cannot invent constitutional availability or re
   const errors = validateIntelligenceDirective(source);
   assert.ok(errors.some((error) => error.includes("missing Constitution source")));
   assert.ok(errors.some((error) => error.includes("real_bbnc_data_allowed must be false")));
+});
+
+test("the whale directive remains singular, bounded, accessible, and subordinate", async () => {
+  assert.deepEqual(validateWhaleDirective(await readWhaleDirective()), []);
+});
+
+test("the whale directive rejects per-page ownership and theatrical timing", async () => {
+  const source = structuredClone(await readWhaleDirective());
+  source.provider_owner = "individual-pages";
+  source.normal_timing_ms.maximum = 4000;
+  source.excluded_interactions = [];
+  const errors = validateWhaleDirective(source);
+  assert.ok(errors.some((error) => error.includes("one provider owner")));
+  assert.ok(errors.some((error) => error.includes("maximum must be 1000ms")));
+  assert.ok(errors.some((error) => error.includes("same-page anchors must remain immediate")));
 });
 
 test("fabricated tier progress and premature finance production are rejected", async () => {
@@ -112,7 +129,7 @@ test("the contracts canary predicate runs tests before typechecking", async () =
 
 test("merged canaries and the first institutional intelligence dependency chain are reconciled", async () => {
   const registry = await readRegistry();
-  for (const id of ["VIC-GOV-001", "VIC-CONTRACT-001", "VIC-DOMAIN-001", "VIC-INTEL-CONTROL-001"]) {
+  for (const id of ["VIC-GOV-001", "VIC-CONTRACT-001", "VIC-DOMAIN-001", "VIC-INTEL-CONTROL-001", "VIC-INTEL-DOCS-001"]) {
     assert.equal(registry.work_packets.find((packet) => packet.id === id)?.state, "done");
   }
   assert.deepEqual(
@@ -124,6 +141,14 @@ test("merged canaries and the first institutional intelligence dependency chain 
       "github://organvm/victoroff-os/pulls/19",
       "github://organvm/victoroff-os/pulls/20",
     ],
+  );
+  assert.equal(
+    registry.work_packets.find((packet) => packet.id === "VIC-INTEL-DOCS-001")?.receipt_target,
+    "github://organvm/victoroff-os/pulls/22",
+  );
+  assert.deepEqual(
+    registry.work_packets.find((packet) => packet.id === "VIC-WHALE-ENGINE-001")?.dependencies,
+    ["VIC-INTEL-DOCS-001"],
   );
   assert.deepEqual(
     registry.work_packets.find((packet) => packet.id === "VIC-INTEL-DOCS-001")?.dependencies,
