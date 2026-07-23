@@ -120,3 +120,4 @@ export class AuditLedger {
     return this.#events;
   }
 }
+export * from "./resolver";
