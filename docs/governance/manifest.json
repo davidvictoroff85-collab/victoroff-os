@@ -1,0 +1,11 @@
+{
+  "classification": "public-safe-synthetic",
+  "provenance": "organvm/victoroff-os",
+  "sources": [
+    {
+      "id": "source-1",
+      "path": "source.txt",
+      "checksum": "35e603f7972a5439471033bba1222defac928cd03f70543d1c49647f1637fb2e"
+    }
+  ]
+}
