@@ -1,0 +1,4 @@
+{"name":"@victoroff/intelligence","version":"0.1.0","private":true,"type":"module","description":"Victoroff.ai conversational intelligence contracts: intent classification, knowledge retrieval, confidence evaluation, safe fallback behavior","exports":{".":{
+    "types":"./dist/index.d.ts",
+    "import":"./dist/index.js"
+  }},"scripts":{"typecheck":"tsc --noEmit -p tsconfig.json","build":"tsc -p tsconfig.json"},"dependencies":{},"devDependencies":{"typescript":"5.8.3","@types/node":"24.1.0"}}
