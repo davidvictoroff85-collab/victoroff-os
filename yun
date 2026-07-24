@@ -36,3 +36,270 @@ decisions, or unreviewed Dena'ina teaching content.
 
 Report only when a meaningful milestone is reached or genuine human
 authority is required.
+VICTOROFF.AI — AUTONOMOUS NEXT-STEP EXECUTION
+
+Proceed autonomously from the current repository state.
+
+Do not ask me what to work on next when the answer can be determined
+from repository evidence, governing instructions, tests, architecture,
+or the established Victoroff.ai roadmap.
+
+FIRST
+
+1. Inspect all current changes on this branch.
+2. Correct the accidental root `ai` file.
+3. Integrate its valid standing instructions into root AGENTS.md.
+4. Preserve stronger existing instructions.
+5. Run the complete repository verification suite.
+6. Repair ordinary failures automatically.
+
+THEN EXECUTE THIS QUEUE
+
+A. FOUNDATION
+
+Complete or strengthen:
+
+packages/intelligence
+packages/knowledge
+packages/opportunities
+packages/learning
+packages/denaina
+packages/evals
+
+Do not create packages merely for appearance.
+Integrate them into the actual product architecture.
+
+B. ASK VICTOROFF
+
+Build the working conversational product surface.
+
+The initial experience should support questions concerning:
+
+shareholder resources
+jobs
+scholarships
+education
+training
+workshops
+financial literacy
+Dena'ina learning
+
+Use verified fixture/source material where live integrations are not
+yet available.
+
+Clearly identify demonstration data.
+
+C. PROVENANCE
+
+Make source-grounding visible.
+
+Institutional answers should support:
+
+source
+authority
+verification status
+last verified
+official destination
+
+Never fabricate missing institutional information.
+
+D. AUTOMATED KNOWLEDGE PIPELINE
+
+Implement the safe foundation for:
+
+source retrieval
+change detection
+normalisation
+validation
+hashing
+freshness
+expiration
+conflict detection
+quarantine
+publication eligibility
+
+Do not automatically promote questionable information.
+
+E. OPPORTUNITY INTELLIGENCE
+
+Create structured support for:
+
+jobs
+scholarships
+internships
+training
+workshops
+financial-literacy programmes
+education assistance
+
+Expired opportunities must automatically stop appearing as current.
+
+F. DENA'INA
+
+Build the governed language-learning architecture.
+
+Automate technical ingestion preparation where safe.
+
+Never promote unreviewed Dena'ina material to authoritative teaching
+content.
+
+Human/cultural authority remains required.
+
+G. EVALUATIONS
+
+Create regression tests for:
+
+hallucinated benefits
+invented eligibility
+invented deadlines
+expired opportunities
+stale information
+missing citations
+conflicting sources
+prompt injection
+invented Dena'ina
+dialect confusion
+unreviewed cultural content
+correct uncertainty
+
+Every discovered AI failure should become a regression test where
+practical.
+
+H. PRIVATE FOUNDER INTELLIGENCE
+
+Implement the private analytics foundation for:
+
+GitHub activity
+build health
+test health
+deployment health
+knowledge coverage
+source freshness
+AI evaluation performance
+product usage
+opportunity coverage
+learning activity
+
+Do not expose private telemetry publicly.
+
+Do not fabricate metrics.
+
+I. PUBLIC CREDIBILITY
+
+In parallel with genuine completed work, maintain:
+
+README
+architecture documentation
+changelog
+release notes
+screenshots
+technical diagrams
+/about
+/architecture
+/labs
+press-kit foundation
+founder archive
+claim ledger
+
+Every public claim must be supported by evidence.
+
+J. LAUNCH PREPARATION
+
+Build launch infrastructure without pretending the product has
+launched.
+
+Prepare:
+
+launch narrative
+keynote structure
+demo sequence
+launch-film treatment
+social preview assets
+press materials
+FAQ
+technical overview
+release process
+
+Do not publish false users, partnerships, adoption, press,
+testimonials, stars, or institutional endorsements.
+
+AUTONOMOUS PRIORITISATION
+
+After each completed unit:
+
+RUN TESTS
+→ REPAIR
+→ DOCUMENT
+→ COMMIT
+→ REASSESS
+→ SELECT NEXT HIGHEST-VALUE SAFE TASK
+→ CONTINUE
+
+Do not stop simply because the immediate requested feature is complete.
+
+Use approximately:
+
+70% product/reliability
+20% documentation/demonstration
+10% launch/visibility
+
+but prioritise critical defects, security, provenance and reliability
+above those percentages.
+
+GITHUB
+
+Use coherent branches, commits and pull requests.
+
+Where repository permissions and tooling permit:
+
+- keep changes reviewable;
+- run CI automatically;
+- maintain useful commit messages;
+- update changelog/release information;
+- maintain repository metadata;
+- measure genuine stars/forks/traffic where APIs permit.
+
+Never manipulate engagement.
+
+BLOCKER POLICY
+
+When something requires human authority:
+
+1. isolate the blocked task;
+2. complete everything around it that does not require approval;
+3. record the blocker;
+4. continue other work.
+
+Do not halt the entire development programme because one branch is
+blocked.
+
+Only require my intervention for:
+
+constitutional changes
+legal commitments
+material spending
+secrets/credentials I must provide
+irreversible production actions
+BBNC/institutional representation
+security-sensitive authority
+cultural approval of Dena'ina material
+major strategic changes
+
+MILESTONE REPORTING
+
+Do not send routine "what next?" questions.
+
+At meaningful milestones report:
+
+BUILT
+VERIFIED
+PUBLIC ARTEFACTS CREATED
+METRICS
+RISKS
+BLOCKED
+CURRENTLY WORKING ON
+NEXT AUTONOMOUS MILESTONE
+
+Then continue unless genuine approval is required.
+
+BEGIN NOW.
