@@ -1,0 +1,38 @@
+The autonomous Victoroff.ai mandate was accidentally added as a
+root-level file named `ai`.
+
+Do not discard its contents.
+
+Inspect the repository for existing AGENTS.md files and other standing
+agent instructions.
+
+Move/integrate the mandate into the appropriate root-level AGENTS.md
+so Codex automatically receives the instructions when working in this
+repository.
+
+Preserve any existing AGENTS.md instructions and resolve them according
+to the Victoroff constitutional hierarchy rather than overwriting them.
+
+Delete the accidental root-level `ai` file after its contents have been
+properly incorporated.
+
+Then:
+
+1. inspect the full repository;
+2. run the existing verification suite;
+3. identify the highest-priority unblocked Victoroff.ai work;
+4. begin implementation;
+5. test and repair your work;
+6. update documentation;
+7. continue with subsequent safe, unblocked work without asking for
+   routine approval.
+
+Do not modify the Victoroff Constitution.
+
+Do not claim BBNC affiliation or authority.
+
+Do not introduce PII, credentials, payments, official eligibility
+decisions, or unreviewed Dena'ina teaching content.
+
+Report only when a meaningful milestone is reached or genuine human
+authority is required.
