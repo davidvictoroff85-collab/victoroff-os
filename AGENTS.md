@@ -44,9 +44,9 @@ All public-facing Victoroff materials must:
 - Lead with the general Victoroff product and the problem it solves.
 - Refer to BBNC only when specifically relevant and label it clearly as
   conceptual, synthetic, uncommissioned, or an origin/use-case example.
-- Never use BBNC branding, records, employee identities, shareholder data,
-  logos, or claims of involvement unless signed written authorization is in
-  place and the applicable custody holds have been released. The BBNC
+- Protected BBNC materials—including branding, records, employee identities,
+  shareholder data, logos, and claims of involvement—require signed written
+  authorization and release of the applicable custody holds. The BBNC
   organization name may appear only in a clearly labeled conceptual or
   uncommissioned reference.
 - Never imply BBNC approval, affiliation, partnership, deployment, customer
