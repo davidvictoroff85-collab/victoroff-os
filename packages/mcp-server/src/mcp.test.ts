@@ -40,7 +40,7 @@ describe("MCP protocol", () => {
     const payload = (await response.json()) as { result: { tools: { name: string; annotations: { readOnlyHint: boolean } }[] } };
     expect(payload.result.tools.map((tool) => tool.name)).toEqual([
       "list_victoroff_offers",
-      "scope_workflow_pilot",
+      "scope_reconstruction_snapshot",
       "check_action_provenance",
     ]);
     expect(payload.result.tools.every((tool) => tool.annotations.readOnlyHint)).toBe(true);
@@ -58,21 +58,33 @@ describe("MCP protocol", () => {
 });
 
 describe("tools", () => {
-  it("lists offers with Stripe payment links", async () => {
+  it("lists the offers published on victoroffgroup.com", async () => {
     const result = await call("list_victoroff_offers", {});
-    const offers = result.structuredContent.offers as { priceUsd: number; paymentLink: string }[];
-    expect(offers.map((offer) => offer.priceUsd)).toEqual([1495, 289, 2500]);
-    expect(offers.every((offer) => offer.paymentLink.startsWith("https://buy.stripe.com/"))).toBe(true);
+    const offers = result.structuredContent.offers as { priceUsd: number | null; startUrl: string }[];
+    expect(offers.map((offer) => offer.priceUsd)).toEqual([2500, 12500, null]);
+    expect(offers.every((offer) => offer.startUrl.startsWith("https://victoroffgroup.com/"))).toBe(true);
   });
 
-  it("scopes a pilot and lists open questions for missing details", async () => {
-    const result = await call("scope_workflow_pilot", {
-      workflow_name: "Payment hold review",
-      description: "Ops reviews held payments by hand in Stripe and email.",
+  it("scopes a Snapshot and lists open questions for missing details", async () => {
+    const result = await call("scope_reconstruction_snapshot", {
+      workflow_name: "Supplier payment hold",
+      outcome: "A $48,500 supplier payment was held after bank details changed.",
     });
-    expect(result.structuredContent.priceUsd).toBe(1495);
-    expect(result.structuredContent.readyToStart).toBe(false);
-    expect((result.structuredContent.openQuestions as string[]).length).toBe(5);
+    expect(result.structuredContent.price).toBe("$2,500 fixed fee");
+    expect(result.structuredContent.readyForStatementOfWork).toBe(false);
+    expect((result.structuredContent.openQuestions as string[]).length).toBe(4);
+  });
+
+  it("marks a fully described Snapshot ready for a statement of work", async () => {
+    const result = await call("scope_reconstruction_snapshot", {
+      workflow_name: "Supplier payment hold",
+      outcome: "Payment held after bank details changed.",
+      systems: ["NetSuite", "Email"],
+      policies: ["Payments release policy"],
+      workflow_owner: "Finance Controller",
+      evidence_handling: "Redacted exports only",
+    });
+    expect(result.structuredContent.readyForStatementOfWork).toBe(true);
   });
 
   it("returns insufficient_provenance when elements are missing", async () => {
@@ -108,7 +120,7 @@ describe("tools", () => {
   });
 
   it("reports invalid input as a tool error", async () => {
-    const result = await call("scope_workflow_pilot", { workflow_name: "x" });
+    const result = await call("scope_reconstruction_snapshot", { workflow_name: "x" });
     expect(result.isError).toBe(true);
   });
 });

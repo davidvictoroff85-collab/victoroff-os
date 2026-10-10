@@ -18,9 +18,10 @@ export const SERVER_INFO = { name: "victoroff-os", title: "Victoroff", version: 
 export const SUPPORTED_PROTOCOL_VERSIONS = ["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05"];
 
 const INSTRUCTIONS =
-  "Victoroff is a founder-led AI workflow automation firm. Use list_victoroff_offers for services and prices, " +
-  "scope_workflow_pilot to draft a pilot scope from a workflow description, and check_action_provenance to " +
-  "check whether the record for a business action is complete. Never present a draft scope as a contract.";
+  "Victoroff reconstructs AI and human authority behind consequential actions for banks, fintechs, and payment " +
+  "operations. Use list_victoroff_offers for services and prices, scope_reconstruction_snapshot to draft a Snapshot " +
+  "scope from a workflow and outcome, and check_action_provenance to check whether the record for an action is " +
+  "complete. Never present a draft scope as a contract, and never treat a supplied record as independently verified.";
 
 const CORS_HEADERS = {
   "access-control-allow-origin": "*",

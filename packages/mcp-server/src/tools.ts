@@ -6,7 +6,7 @@
  * When evidence is missing, tools say so explicitly.
  */
 
-import { CONTACT_EMAIL, OFFERS, SITE_URL, findOffer } from "./offers.js";
+import { CONTACT_EMAIL, ENGAGEMENT_URL, OFFERS, SITE_URL, findOffer } from "./offers.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 type Args = Record<string, unknown>;
@@ -59,15 +59,6 @@ function optionalStringList(args: Args, key: string): string[] {
   return (value as string[]).map((item) => item.trim()).filter((item) => item.length > 0);
 }
 
-function optionalPositiveNumber(args: Args, key: string): number | null {
-  const value = args[key];
-  if (value === undefined || value === null) return null;
-  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
-    throw new ToolInputError(`${key} must be a non-negative number`);
-  }
-  return value;
-}
-
 const readOnly = (title: string) => ({
   title,
   readOnlyHint: true,
@@ -80,98 +71,106 @@ const listOffers: ToolDefinition = {
   name: "list_victoroff_offers",
   title: "List Victoroff Offers",
   description:
-    "Lists Victoroff's current services with prices, what each includes, and the secure Stripe payment link. Use when someone asks what Victoroff offers, what it costs, or how to start.",
+    "Lists Victoroff's published services for banks, fintechs, and payment operations, with price, timing, what each includes, and where to start. Use when someone asks what Victoroff offers, what it costs, or how to engage.",
   inputSchema: { type: "object", properties: {}, additionalProperties: false },
   annotations: readOnly("List Victoroff Offers"),
   run: () => ({
     offers: OFFERS.map((offer) => ({
       id: offer.id,
       name: offer.name,
+      price: offer.price,
       priceUsd: offer.priceUsd,
-      billing: offer.billing,
+      timing: offer.timing,
       summary: offer.summary,
       includes: [...offer.includes],
-      paymentLink: offer.paymentLink,
+      startUrl: offer.startUrl,
     })),
     contact: CONTACT_EMAIL,
     website: SITE_URL,
-    note: "Agree on scope in writing before paying. Questions go to the contact email.",
+    note: "Scope, evidence handling, and fee are confirmed in a written statement of work with Victoroff Investments Corp before any records are shared.",
   }),
 };
 
-const scopePilot: ToolDefinition = {
-  name: "scope_workflow_pilot",
-  title: "Scope a Workflow Pilot",
+const scopeSnapshot: ToolDefinition = {
+  name: "scope_reconstruction_snapshot",
+  title: "Scope a Reconstruction Snapshot",
   description:
-    "Turns a description of one business workflow into a draft scope for the $1,495, 14-day Victoroff Workflow Intelligence Pilot. Returns what the pilot would cover, what is out of scope, the open questions that must be answered before starting, and the payment link. It does not assess or score the business.",
+    "Turns a description of one financial workflow and outcome into a draft scope for the $2,500 Victoroff Workflow Reconstruction Snapshot. Returns what the Snapshot would reconstruct, what you bring, what you receive, what is out of scope, and the open questions to settle before a statement of work. It does not assess, score, or judge the business.",
   inputSchema: {
     type: "object",
     properties: {
-      workflow_name: { type: "string", description: "Short name, e.g. 'Payment hold review'" },
-      description: {
+      workflow_name: { type: "string", description: "Short name, e.g. 'Supplier payment hold'" },
+      outcome: {
         type: "string",
-        description: "How the workflow works today: who does what, in which systems, and where it breaks",
+        description: "The consequential outcome to reconstruct, e.g. 'A $48,500 supplier payment was held after bank details changed'",
       },
-      monthly_volume: { type: "number", description: "Approximate items handled per month" },
       systems: {
         type: "array",
         items: { type: "string" },
-        description: "Systems the workflow touches, e.g. Stripe, HubSpot, Gmail",
+        description: "Systems that hold the records, e.g. Stripe, NetSuite, Slack, email",
       },
-      workflow_owner: { type: "string", description: "Role that owns the workflow today" },
-      success_metric: {
+      policies: {
+        type: "array",
+        items: { type: "string" },
+        description: "Relevant policies or delegations, e.g. 'Payments release policy'",
+      },
+      workflow_owner: { type: "string", description: "Role that owns the workflow and will review the result" },
+      evidence_handling: {
         type: "string",
-        description: "What a successful pilot would change, e.g. 'review time under 1 hour'",
+        description: "Any constraints on sharing records, e.g. 'exports only, no production access'",
       },
     },
-    required: ["workflow_name", "description"],
+    required: ["workflow_name", "outcome"],
     additionalProperties: false,
   },
-  annotations: readOnly("Scope a Workflow Pilot"),
+  annotations: readOnly("Scope a Reconstruction Snapshot"),
   run: (args) => {
     const workflowName = requiredString(args, "workflow_name", 200);
-    const description = requiredString(args, "description", 4000);
-    const monthlyVolume = optionalPositiveNumber(args, "monthly_volume");
+    const outcome = requiredString(args, "outcome", 4000);
     const systems = optionalStringList(args, "systems");
+    const policies = optionalStringList(args, "policies");
     const owner = optionalString(args, "workflow_owner", 200);
-    const successMetric = optionalString(args, "success_metric", 500);
-    const pilot = findOffer("workflow_intelligence_pilot");
+    const evidenceHandling = optionalString(args, "evidence_handling", 1000);
+    const snapshot = findOffer("workflow_reconstruction_snapshot");
 
     const openQuestions: string[] = [];
-    if (monthlyVolume === null) openQuestions.push("About how many items does this workflow handle per month?");
-    if (systems.length === 0) openQuestions.push("Which systems does the workflow touch?");
-    if (owner === null) openQuestions.push("Who owns this workflow today, and who approves exceptions?");
-    if (successMetric === null) openQuestions.push("What measurable change would make the pilot a success?");
-    openQuestions.push("Can sample or exported records be shared for the pilot, and are there data-handling rules?");
+    if (systems.length === 0) openQuestions.push("Which systems hold the records for this outcome?");
+    if (policies.length === 0) openQuestions.push("Which policies or delegations govern who may act in this workflow?");
+    if (owner === null) openQuestions.push("Who owns this workflow and will review the reconstruction?");
+    if (evidenceHandling === null) {
+      openQuestions.push("How may records be shared (exports, redacted copies, screen share), and what confidentiality terms apply?");
+    }
 
     return {
-      offer: pilot.name,
-      priceUsd: pilot.priceUsd,
-      durationDays: 14,
-      workflow: {
-        name: workflowName,
-        description,
-        monthlyVolume,
-        systems,
-        owner,
-        successMetric,
-      },
-      inScope: [
-        `Map the "${workflowName}" workflow end to end: steps, owners, approvals, handoffs, and exceptions`,
-        "Design and build an AI-assisted intake or triage step for this workflow",
-        "Working demo on agreed sample data",
-        "Implementation plan for production rollout",
+      offer: snapshot.name,
+      price: snapshot.price,
+      timing: snapshot.timing,
+      workflow: { name: workflowName, outcome, systems, policies, owner, evidenceHandling },
+      reconstructs: [
+        "What happened, step by step, with a source record for each link",
+        "Who or what acted at each step",
+        "What authorized each action, and whether it was within delegated permission",
+        "What the available evidence cannot explain",
+      ],
+      youBring: [
+        "One agreed financial workflow and outcome",
+        "Relevant policies",
+        "A description of the records available",
+      ],
+      youReceive: [
+        "Sourced reconstruction chain and executive finding",
+        "Authority map: capability versus delegated permission",
+        "Evidence-gap register and recommended next step",
       ],
       outOfScope: [
-        "Production deployment or changes to live systems",
-        "Workflows other than the one named above",
-        "Legal or regulatory compliance opinions",
+        "Changes to live systems or releasing any payment",
+        "Workflows or outcomes other than the one named above",
+        "Legal, compliance, financial, or investment advice",
       ],
       openQuestions,
-      readyToStart: openQuestions.length === 1,
-      nextStep: `Confirm the scope in writing with ${CONTACT_EMAIL}, then pay with the link below.`,
-      paymentLink: pilot.paymentLink,
-      disclaimer: "Draft scope generated from the information provided. Final scope is agreed in writing.",
+      readyForStatementOfWork: openQuestions.length === 0,
+      nextStep: `Discuss this scope at ${ENGAGEMENT_URL} or with ${CONTACT_EMAIL}. Scope, evidence handling, and fee are confirmed in a written statement of work before any records are shared.`,
+      disclaimer: "Draft scope generated from the information provided. It is not an offer or a contract.",
     };
   },
 };
@@ -243,7 +242,7 @@ const checkProvenance: ToolDefinition = {
   },
 };
 
-export const TOOLS: readonly ToolDefinition[] = [listOffers, scopePilot, checkProvenance];
+export const TOOLS: readonly ToolDefinition[] = [listOffers, scopeSnapshot, checkProvenance];
 
 export function callTool(name: string, args: Args): ToolResult {
   const tool = TOOLS.find((candidate) => candidate.name === name);
