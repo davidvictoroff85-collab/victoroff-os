@@ -1,142 +1,145 @@
 /**
- * Victoroff OS — ChatGPT App / MCP Connector
- * ------------------------------------------
- * createVictoroffMcpServer() is the reusable factory imported by:
- *   - this file's standalone dev listener (pnpm dev)
- *   - /api/mcp.ts (Vercel serverless deployment)
+ * Victoroff OS — MCP connector (Streamable HTTP, stateless).
+ * -----------------------------------------------------------
+ * A dependency-free Model Context Protocol endpoint built on the Fetch API,
+ * so it runs unchanged in Cloudflare Workers, Node 24, and tests.
  *
- * Local dev:
- *   npx tsx src/server.ts
- * Then expose with ngrok and register the printed URL + /mcp in
- * ChatGPT: Settings → Apps & Connectors → Developer Mode → Create.
+ * Supported: initialize, notifications/*, ping, tools/list, tools/call.
+ * Responses are plain JSON (no SSE stream); GET and DELETE return 405,
+ * which the Streamable HTTP transport permits for stateless servers.
+ *
+ * Local dev:   pnpm exec wrangler dev   → http://localhost:8787/mcp
+ * Production:  https://victoroffgroup.com/mcp
  */
 
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
-import { z } from "zod";
-import http from "node:http";
+import { TOOLS, ToolInputError, callTool } from "./tools.js";
 
-export function createVictoroffMcpServer() {
-  const server = new McpServer({
-    name: "victoroff-os",
-    version: "0.1.0",
-  });
+export const SERVER_INFO = { name: "victoroff-os", title: "Victoroff", version: "0.2.0" };
+export const SUPPORTED_PROTOCOL_VERSIONS = ["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05"];
 
-  server.registerTool(
-    "assess_governance_exposure",
-    {
-      title: "Assess Governance Exposure",
-      description:
-        "Runs a Victoroff Governance Exposure Assessment for a named institution and returns a risk summary with citations to source records.",
-      inputSchema: {
-        institution: z.string().describe("Institution name, e.g. 'University of Washington'"),
-        system: z
-          .enum(["blackbaud", "salesforce", "ellucian", "other"])
-          .describe("Advancement platform in use"),
-      },
-      annotations: {
-        readOnlyHint: true,
-        openWorldHint: false,
-      },
-    },
-    async ({ institution, system }) => {
-      const result = {
-        institution,
-        system,
-        riskLevel: "moderate",
-        findings: [
-          "Sample finding placeholder — connect to real assessment engine.",
-        ],
-        generatedAt: new Date().toISOString(),
-      };
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-      };
-    }
-  );
+const INSTRUCTIONS =
+  "Victoroff is a founder-led AI workflow automation firm. Use list_victoroff_offers for services and prices, " +
+  "scope_workflow_pilot to draft a pilot scope from a workflow description, and check_action_provenance to " +
+  "check whether the record for a business action is complete. Never present a draft scope as a contract.";
 
-  server.registerTool(
-    "verify_record_provenance",
-    {
-      title: "Verify Record Provenance",
-      description:
-        "Checks the source provenance and revision history for a given record ID and returns whether it is verifiable.",
-      inputSchema: {
-        recordId: z.string().describe("Internal record identifier"),
-      },
-      annotations: {
-        readOnlyHint: true,
-        openWorldHint: false,
-      },
-    },
-    async ({ recordId }) => {
-      const result = {
-        recordId,
-        verified: true,
-        revisionCount: 1,
-        lastVerifiedAt: new Date().toISOString(),
-      };
-      return {
-        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
-      };
-    }
-  );
+const CORS_HEADERS = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "POST, GET, OPTIONS",
+  "access-control-allow-headers": "content-type, accept, mcp-protocol-version, mcp-session-id, authorization",
+  "access-control-expose-headers": "mcp-protocol-version",
+};
 
-  server.registerTool(
-    "generate_audit_receipt",
-    {
-      title: "Generate Audit Receipt",
-      description:
-        "Creates an exportable audit receipt documenting a governance action or assessment for institutional records.",
-      inputSchema: {
-        institution: z.string(),
-        summary: z.string().describe("Short description of the action being receipted"),
-      },
-      annotations: {
-        readOnlyHint: false,
-        destructiveHint: false,
-        openWorldHint: false,
-      },
-    },
-    async ({ institution, summary }) => {
-      const receiptId = `VOS-${Date.now()}`;
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              { receiptId, institution, summary, issuedAt: new Date().toISOString() },
-              null,
-              2
-            ),
-          },
-        ],
-      };
-    }
-  );
-
-  return server;
+interface JsonRpcRequest {
+  jsonrpc: "2.0";
+  id?: string | number | null;
+  method: string;
+  params?: Record<string, unknown>;
 }
 
-const isDirectRun = process.argv[1]?.endsWith("server.ts") || process.argv[1]?.endsWith("server.js");
+type RpcId = string | number | null;
 
-if (isDirectRun) {
-  const transport = new StreamableHTTPServerTransport({
-    sessionIdGenerator: undefined,
+function json(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json", ...CORS_HEADERS },
   });
+}
 
-  const httpServer = http.createServer(async (req, res) => {
-    if (req.url === "/mcp") {
-      const server = createVictoroffMcpServer();
-      await server.connect(transport);
-      await transport.handleRequest(req, res);
-    } else {
-      res.writeHead(404).end();
+function rpcError(id: RpcId, code: number, message: string, status = 200): Response {
+  return json({ jsonrpc: "2.0", id, error: { code, message } }, status);
+}
+
+function negotiateVersion(requested: unknown): string {
+  return typeof requested === "string" && SUPPORTED_PROTOCOL_VERSIONS.includes(requested)
+    ? requested
+    : (SUPPORTED_PROTOCOL_VERSIONS[0] as string);
+}
+
+function dispatch(message: JsonRpcRequest): Response {
+  const id: RpcId = message.id ?? null;
+  const params = message.params ?? {};
+
+  // Notifications carry no id and receive no JSON-RPC response.
+  if (message.id === undefined) {
+    return new Response(null, { status: 202, headers: CORS_HEADERS });
+  }
+
+  switch (message.method) {
+    case "initialize":
+      return json({
+        jsonrpc: "2.0",
+        id,
+        result: {
+          protocolVersion: negotiateVersion(params.protocolVersion),
+          capabilities: { tools: { listChanged: false } },
+          serverInfo: SERVER_INFO,
+          instructions: INSTRUCTIONS,
+        },
+      });
+    case "ping":
+      return json({ jsonrpc: "2.0", id, result: {} });
+    case "tools/list":
+      return json({
+        jsonrpc: "2.0",
+        id,
+        result: {
+          tools: TOOLS.map(({ name, title, description, inputSchema, annotations }) => ({
+            name,
+            title,
+            description,
+            inputSchema,
+            annotations,
+          })),
+        },
+      });
+    case "tools/call": {
+      const name = params.name;
+      const args = params.arguments ?? {};
+      if (typeof name !== "string") return rpcError(id, -32602, "params.name must be a string");
+      if (typeof args !== "object" || args === null || Array.isArray(args)) {
+        return rpcError(id, -32602, "params.arguments must be an object");
+      }
+      try {
+        return json({ jsonrpc: "2.0", id, result: callTool(name, args as Record<string, unknown>) });
+      } catch (error) {
+        if (error instanceof ToolInputError) return rpcError(id, -32602, error.message);
+        return rpcError(id, -32603, "Internal error");
+      }
     }
-  });
+    default:
+      return rpcError(id, -32601, `Method not found: ${message.method}`);
+  }
+}
 
-  const PORT = process.env.PORT || 8000;
-  httpServer.listen(PORT, () => {
-    console.log(`Victoroff MCP server listening on http://localhost:${PORT}/mcp`);
-  });
+export async function handleMcpRequest(request: Request): Promise<Response> {
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: CORS_HEADERS });
+  if (request.method !== "POST") {
+    return new Response("Method Not Allowed", {
+      status: 405,
+      headers: { allow: "POST, OPTIONS", ...CORS_HEADERS },
+    });
+  }
+
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return rpcError(null, -32700, "Parse error", 400);
+  }
+
+  if (
+    typeof body !== "object" ||
+    body === null ||
+    Array.isArray(body) ||
+    (body as JsonRpcRequest).jsonrpc !== "2.0" ||
+    typeof (body as JsonRpcRequest).method !== "string"
+  ) {
+    // Responses sent by a client (no method) are acknowledged without a body.
+    if (typeof body === "object" && body !== null && !Array.isArray(body) && "result" in body) {
+      return new Response(null, { status: 202, headers: CORS_HEADERS });
+    }
+    return rpcError(null, -32600, "Invalid Request", 400);
+  }
+
+  return dispatch(body as JsonRpcRequest);
 }

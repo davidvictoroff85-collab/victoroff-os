@@ -1,0 +1,9 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "victoroff-mcp",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-06-30",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [{ "pattern": "mcp.victoroffgroup.com", "custom_domain": true }]
+}
