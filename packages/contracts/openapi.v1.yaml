@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  title: BBNC Stewardship internal command API
+  title: Victoroff Stewardship internal command API
   version: 1.0.0
   description: Internal, default-deny command surface. It is not consumed by the public site.
 servers:
