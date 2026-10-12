@@ -1,10 +1,10 @@
 # Victoroff OS
 
-> Every shareholder task. One clear next step.
+> Every payment decision. One clear explanation.
 
-Victoroff OS is a private, uncommissioned product concept for a public-safe shareholder action
-center and a governed institutional publication system. It does not assert BBNC authority,
-affiliation, commission, production status, or permission to represent BBNC publicly.
+Victoroff OS is a private, uncommissioned product concept for reconstructing payment holds,
+exceptions, and approvals in financial services, plus a governed publication system. It uses
+fictional records only and implies no customer affiliation, endorsement, or production status.
 
 **Canonical host:** <https://victoroffgroup.com> via Cloudflare Workers Static Assets, after the
 cutover predicates in [issue #2](https://github.com/organvm/victoroff-os/issues/2) pass.
@@ -16,7 +16,7 @@ redeploy or promote it during the Cloudflare lane.
 
 | Surface | Purpose | Public deployment |
 |---|---|---|
-| `apps/site` | Anonymous Shareholder Action Center and product pitch | Yes |
+| `apps/site` | Synthetic payment-workflow center and product pitch | Yes |
 | `apps/stewardship-demo` | Synthetic staff workflow proof | No |
 | `packages/contracts` | OpenAPI 3.1 and JSON Schema contracts | Build artifact |
 | `packages/domain` | Authority, lifecycle, approval, release, and audit rules | Internal only |
@@ -64,9 +64,9 @@ runtime binding, or drift from the static-only Cloudflare and frozen Vercel boun
 
 ## Safety boundary
 
-The concept stores no credentials, PII, uploads, applications, submissions, votes, cookies, local
-storage, analytics identifiers, or form data. myBBNC remains the authenticated shareholder record
-system. BBNCVote remains the voting system. Every external handoff is labeled and retains a human
+The concept stores no credentials, PII, uploads, applications, submissions, cookies, local
+storage, analytics identifiers, or form data. It connects to no banking or payment system and
+cannot release, approve, or move a payment. Every external handoff is labeled and retains a human
 fallback.
 
 See [architecture](docs/architecture.md), [phase delivery](docs/phase-plan.md), and

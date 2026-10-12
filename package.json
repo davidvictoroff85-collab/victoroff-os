@@ -2,7 +2,7 @@
   "name": "victoroff-os",
   "version": "0.2.0",
   "private": true,
-  "description": "A public-safe shareholder action center and governed publication system",
+  "description": "Payment-workflow reconstruction concept and governed publication system",
   "type": "module",
   "packageManager": "pnpm@10.34.4",
   "engines": {
