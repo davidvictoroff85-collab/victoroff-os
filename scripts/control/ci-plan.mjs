@@ -53,6 +53,7 @@ export function classifyChangedFiles(files) {
       path.startsWith("apps/") ||
       path.startsWith("packages/") ||
       path.startsWith("services/") ||
+      path.startsWith("api/") ||
       path === "scripts/lint.mjs" ||
       path === "scripts/stage-site.mjs"
     ) {
@@ -75,6 +76,7 @@ export function classifyChangedFiles(files) {
       path === "pnpm-lock.yaml" ||
       path === "wrangler.jsonc" ||
       path === "vercel.json" ||
+      path.startsWith("api/") ||
       path.startsWith("apps/site/") ||
       path === "scripts/stage-site.mjs"
     ) {

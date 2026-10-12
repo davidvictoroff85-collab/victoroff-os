@@ -67,3 +67,14 @@ test("a nonempty unclassified diff fails closed in the plan", () => {
   assert.deepEqual(planChangedFiles(["docs/research/new-surface.md"]).unclassified, ["docs/research/new-surface.md"]);
   assert.deepEqual(planChangedFiles([]).unclassified, []);
 });
+
+test("serverless api route changes run code and release shards", () => {
+  assert.deepEqual(classifyChangedFiles(["api/mcp.ts"]), {
+    control: false,
+    docs: false,
+    code: true,
+    browser: false,
+    release: true,
+  });
+  assert.deepEqual(planChangedFiles(["api/mcp.ts"]).unclassified, []);
+});

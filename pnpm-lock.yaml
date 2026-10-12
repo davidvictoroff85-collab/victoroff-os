@@ -87,6 +87,17 @@ importers:
         specifier: workspace:*
         version: link:../contracts
 
+  packages/intelligence:
+    devDependencies:
+      '@types/node':
+        specifier: 24.1.0
+        version: 24.1.0
+      typescript:
+        specifier: 5.8.3
+        version: 5.8.3
+
+  packages/mcp-server: {}
+
   packages/publication:
     dependencies:
       '@victoroff/contracts':
