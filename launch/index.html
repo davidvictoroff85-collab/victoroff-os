@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workflow Reconstruction Snapshot — Victoroff</title>
+<meta name="description" content="A fixed-price, $2,500 reconstruction of one AI-supported workflow: who approves each step, who is responsible, and what gets recorded. For banks, fintechs, and payment operations.">
+<meta property="og:title" content="Workflow Reconstruction Snapshot — Victoroff">
+<meta property="og:description" content="One AI-supported workflow. A written map of who approved what, who owns it, and what was recorded. $2,500, fixed price.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111'/%3E%3Ctext x='16' y='22' font-family='Georgia' font-size='18' fill='%23fff' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#fbfaf7; --surface:#ffffff; --ink:#15171a; --muted:#5b6068; --line:#e3e0d8;
+  --accent:#1f4d3a; --accent-ink:#ffffff; --soft:#eef3ef;
+  --max:1080px; --r:10px;
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0f1112; --surface:#171a1c; --ink:#eceae4; --muted:#a3a7ad; --line:#2a2e31; --accent:#7fc4a2; --accent-ink:#0f1112; --soft:#18231e; }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.mark{font-family:Georgia,"Times New Roman",serif;font-size:20px;letter-spacing:.02em;text-decoration:none}
+header nav{display:flex;gap:20px;font-size:15px}
+header nav a{text-decoration:none;color:var(--muted)}
+header nav a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:var(--r);font-weight:600;text-decoration:none;font-size:16px;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{border-color:var(--line);background:transparent}
+.btn-ghost:hover{border-color:var(--muted)}
+.hero{padding:88px 0 72px}
+.eyebrow{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(34px,5.4vw,58px);line-height:1.08;margin:0 0 24px;max-width:18ch;letter-spacing:-.01em}
+.lede{font-size:clamp(18px,2vw,21px);color:var(--muted);max-width:60ch;margin:0 0 32px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.price-note{font-size:14px;color:var(--muted);margin-top:14px}
+section{padding:72px 0;border-top:1px solid var(--line)}
+h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(26px,3.2vw,36px);line-height:1.15;margin:0 0 16px}
+.sub{color:var(--muted);max-width:62ch;margin:0 0 36px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.card h3{font-size:17px;margin:0 0 8px}
+.card p{margin:0;color:var(--muted);font-size:15.5px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.steps li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.steps li::before{content:counter(s,decimal-leading-zero);display:block;font-size:13px;letter-spacing:.1em;color:var(--accent);font-weight:700;margin-bottom:8px}
+.steps b{display:block;margin-bottom:4px}
+.steps span{color:var(--muted);font-size:15.5px}
+.offer{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start}
+.pricebox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px}
+.pricebox .amt{font-family:Georgia,serif;font-size:48px;line-height:1;margin:6px 0 4px}
+.pricebox ul{padding-left:18px;margin:18px 0 22px;color:var(--muted)}
+.pricebox li{margin:6px 0}
+.pricebox .btn{width:100%}
+.pricebox .alt{display:block;text-align:center;margin-top:12px;font-size:14.5px;color:var(--muted)}
+.guarantee{background:var(--soft);border-radius:var(--r);padding:16px 18px;font-size:15.5px;margin-top:16px}
+.next{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-top:24px}
+.next p{margin:0;color:var(--muted)}
+details{border-bottom:1px solid var(--line);padding:16px 0}
+summary{cursor:pointer;font-weight:600;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";float:right;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin:10px 0 0}
+.founder{display:grid;grid-template-columns:1fr 2fr;gap:32px}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between}
+footer a{color:var(--muted)}
+@media (max-width:760px){
+  header nav{display:none}
+  .hero{padding:56px 0 48px}
+  section{padding:52px 0}
+  .offer,.founder{grid-template-columns:1fr}
+  .cta-row .btn{width:100%}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="/">Victoroff</a>
+    <nav aria-label="Primary">
+      <a href="#what">What you get</a>
+      <a href="#how">How it works</a>
+      <a href="#price">Price</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary" data-buy href="#price" style="padding:10px 16px;font-size:15px">Buy the Snapshot</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="border-top:0">
+    <div class="wrap">
+      <p class="eyebrow">Workflow Reconstruction Snapshot</p>
+      <h1>When someone asks who authorized an AI-assisted decision, have the answer on one page.</h1>
+      <p class="lede">We reconstruct one AI-supported workflow at your organization and write down who approves each step, who is responsible for it, and what gets recorded. It's a fixed price of $2,500, paid up front, and it doesn't need a procurement cycle.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" data-buy href="#price">Buy the Snapshot — $2,500</a>
+        <a class="btn btn-ghost" data-invoice href="#price">Need an invoice?</a>
+      </div>
+      <p class="price-note">For banks, credit unions, fintechs, payment operations, and AI vendors selling into them.</p>
+    </div>
+  </section>
+
+  <section id="what">
+    <div class="wrap">
+      <h2>What you get</h2>
+      <p class="sub">We take one workflow that AI now touches, such as alert review, onboarding, a lending file, or a payment release, and trace it end to end.</p>
+      <div class="grid">
+        <div class="card"><h3>Authority map</h3><p>A written map of each step: who or what acts, who approves, and on what basis.</p></div>
+        <div class="card"><h3>Responsibility list</h3><p>A named owner for every decision point, including the steps where an agent acts on someone's behalf.</p></div>
+        <div class="card"><h3>Record check</h3><p>What is recorded today, where it lives, and whether you could reproduce the decision later.</p></div>
+        <div class="card"><h3>Gap list, ranked</h3><p>The places where approval or records are missing, ordered by how much they matter to fix first.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="sub">It's one workflow with a fixed scope, fixed price, and a written result.</p>
+      <ol class="steps">
+        <li><b>Pay</b><span>Pay by card through Stripe, or request an invoice. Work starts once payment clears.</span></li>
+        <li><b>Intake</b><span>Answer three questions: which workflow, who owns it, and your deadline.</span></li>
+        <li><b>Reconstruction</b><span>We review the materials you share and talk with the workflow owner.</span></li>
+        <li><b>Readout</b><span>You receive the written Snapshot and a call to walk through it.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="price">
+    <div class="wrap offer">
+      <div>
+        <h2>One price. Paid up front.</h2>
+        <p class="sub">At $2,500, most managers can approve it themselves. You get a document you can hand to risk, audit, or a customer who asks.</p>
+        <div class="guarantee"><strong>Refund promise.</strong> If we can't scope your workflow, we refund you in full within 2 business days.</div>
+        <div class="next"><p><strong>After the Snapshot:</strong> if you want every AI-supported workflow mapped the same way, the full assessment is $12,500. The Snapshot is yours either way.</p></div>
+      </div>
+      <div class="pricebox">
+        <div class="eyebrow" style="margin:0">Workflow Reconstruction Snapshot</div>
+        <div class="amt">$2,500</div>
+        <div style="color:var(--muted);font-size:15px">Fixed price · one workflow</div>
+        <ul>
+          <li>Authority map</li>
+          <li>Responsibility list</li>
+          <li>Record check</li>
+          <li>Ranked gap list</li>
+          <li>Readout call</li>
+        </ul>
+        <a class="btn btn-primary" data-buy href="#">Pay now by card</a>
+        <a class="alt" data-invoice href="#">Your organization pays by invoice? Request one →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Questions</h2>
+      <details><summary>Why pay before we talk?</summary><p>The scope is fixed, so there is nothing to negotiate. Paying up front means we start on your workflow right away instead of scheduling a sales call. If we can't scope it, you get a full refund.</p></details>
+      <details><summary>Can we pay by invoice?</summary><p>Yes. Request an invoice and we'll send one due on receipt. Work begins once it's paid.</p></details>
+      <details><summary>What do you need from us?</summary><p>We need the name of one workflow, one person who owns it, and whatever documentation already exists. Nothing needs to be prepared especially for us.</p></details>
+      <details><summary>Will you sign our NDA?</summary><p>Yes. Send it with your intake answers.</p></details>
+      <details><summary>Is this a legal or compliance opinion?</summary><p>No. The Snapshot is an operational record of how the workflow runs today. It does not give legal advice, certify compliance, or replace your counsel or auditors.</p></details>
+    </div>
+  </section>
+
+  <section id="founder">
+    <div class="wrap founder">
+      <div><p class="eyebrow">Who you work with</p><h2>David Victoroff</h2></div>
+      <div><p class="sub" style="margin:0">Founder of Victoroff. I do each Snapshot myself, from intake to readout. You deal with the person doing the work from start to finish.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Victoroff Group</span>
+    <span><a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · <a data-contact href="#">Contact</a></span>
+  </div>
+</footer>
+
+<script>
+/* ===== Launch config: the only values that need changing ===== */
+var CONFIG = {
+  STRIPE_PAYMENT_LINK: "",                 // paste https://buy.stripe.com/... here
+  CONTACT_EMAIL: "admin@victoroffgroup.com"
+};
+/* ============================================================== */
+(function(){
+  var mail = function(subject, body){
+    return "mailto:" + CONFIG.CONTACT_EMAIL + "?subject=" + encodeURIComponent(subject) + (body ? "&body=" + encodeURIComponent(body) : "");
+  };
+  var buyHref = CONFIG.STRIPE_PAYMENT_LINK || mail("Buy: Workflow Reconstruction Snapshot ($2,500)", "Company:\nWorkflow to reconstruct:\nDeadline:\n");
+  var invoiceHref = mail("Invoice request: Workflow Reconstruction Snapshot ($2,500)", "Company legal name:\nBilling contact + email:\nPO number (if any):\nWorkflow to reconstruct:\nDeadline:\n");
+  document.querySelectorAll("[data-buy]").forEach(function(a){
+    if (a.getAttribute("href") === "#price" && !CONFIG.STRIPE_PAYMENT_LINK) return;
+    a.href = buyHref;
+    if (CONFIG.STRIPE_PAYMENT_LINK) { a.target = "_blank"; a.rel = "noopener"; }
+  });
+  document.querySelectorAll("[data-buy][href='#price']").forEach(function(a){ if (CONFIG.STRIPE_PAYMENT_LINK) a.href = buyHref; });
+  document.querySelectorAll("[data-invoice]").forEach(function(a){ a.href = invoiceHref; });
+  document.querySelectorAll("[data-contact]").forEach(function(a){ a.href = mail("Question about the Snapshot"); });
+})();
+</script>
+</body>
+</html>
