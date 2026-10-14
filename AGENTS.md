@@ -27,6 +27,33 @@ storage. AI may classify or explain an intent, but only deterministic code may r
 authority. AI cannot approve, release, invent authority, or present an uncited rule as governing
 truth.
 
+## Victoroff product independence and origin boundary
+
+Victoroff is an independent, commercial, provider-neutral product for
+organizations that need human approval and reliable records for AI-supported work.
+
+BBNC shareholder development was an inspiration for the Victoroff idea.
+It is not Victoroff's brand, customer, partner, legal authority, endorsement,
+or proof of product use.
+
+This rule applies to all Victoroff work, including code, product design,
+website copy, blog content, demonstrations, sales materials, outreach,
+social media, prompts, integrations, and future repositories.
+
+All public-facing Victoroff materials must:
+- Lead with the general Victoroff product and the problem it solves.
+- Refer to BBNC only when specifically relevant and label it clearly as
+  conceptual, synthetic, uncommissioned, or an origin/use-case example.
+- Protected BBNC materials—including branding, records, employee identities,
+  shareholder data, logos, and claims of involvement—require signed written
+  authorization and release of the applicable custody holds. The BBNC
+  organization name may appear only in a clearly labeled conceptual or
+  uncommissioned reference.
+- Never imply BBNC approval, affiliation, partnership, deployment, customer
+  status, or endorsement.
+- Keep BBNC-specific materials clearly labeled and separate from general
+  commercial material.
+
 ## Source of truth
 
 `program/registry.v1.json` owns the additive program, the preserved 55-checkpoint BBNC graph, path
