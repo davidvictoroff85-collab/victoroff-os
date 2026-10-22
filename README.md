@@ -1,8 +1,14 @@
 # Victoroff OS
 
+## Start with an inspectable example
+
+For a focused local evidence demo, try [Memory Window](https://github.com/davidvictoroff85-collab/memory-window): inspect an A–Z chain, expose missing records, detect altered content, and store repeated text once. It is a separate working prototype with licensing pending.
+
+This repository is publicly readable; its existing [proprietary license](LICENSE) still applies. The concept and deployment notes below describe the broader experimental platform and should not be taken as a fresh verification of a live service. See the [account profile](https://github.com/davidvictoroff85-collab) for the current project entry points.
+
 > Every shareholder task. One clear next step.
 
-Victoroff OS is a private, uncommissioned product concept for a public-safe shareholder action
+Victoroff OS is an uncommissioned product concept for a public-safe shareholder action
 center and a governed institutional publication system. It does not assert BBNC authority,
 affiliation, commission, production status, or permission to represent BBNC publicly.
 
