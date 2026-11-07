@@ -1,17 +1,17 @@
 import "@victoroff/ui/styles.css";
 import "./site.css";
-import { shareholderActions } from "@victoroff/fixtures";
+import { shareholderActions as workflowActions } from "@victoroff/fixtures";
 import { activateTabs } from "@victoroff/ui";
 
 document.documentElement.classList.add("enhanced");
 
 const actionButtons = [...document.querySelectorAll<HTMLButtonElement>("[data-action-tab]")];
 const actionPanels = [...document.querySelectorAll<HTMLElement>("[data-action-result]")];
-if (actionButtons.length === shareholderActions.length && actionPanels.length === shareholderActions.length) {
+if (actionButtons.length === workflowActions.length && actionPanels.length === workflowActions.length) {
   activateTabs({
     buttons: actionButtons,
     panels: actionPanels,
-    selectedId: "action-panel-distribution-records",
+    selectedId: "action-panel-bank-detail-change",
     onSelect: (id, userInitiated) => {
       if (!userInitiated) return;
       const panel = document.getElementById(id);
@@ -23,50 +23,50 @@ if (actionButtons.length === shareholderActions.length && actionPanels.length ==
 const ringDetails = {
   center: {
     index: "Center",
-    title: "Shareholder success",
-    works: "Find the right task, prepare once, complete it in the owning system, and keep a human fallback.",
-    owner: "Shareholder",
-    data: "No data stored by the public guide.",
+    title: "Explainable outcome",
+    works: "Every consequential decision connects to its trigger, actor, authority, policy, and evidence.",
+    owner: "The accountable workflow owner",
+    data: "No data stored by this concept.",
     expands: "The invariant every later ring must protect.",
   },
   guide: {
     index: "Ring 1",
-    title: "Guide",
-    works: "Anonymous deadlines, eligibility, preparation, sources, and external handoffs.",
-    owner: "Public Communications",
-    data: "Allow-listed public information only.",
-    expands: "Adds an intelligent front door without becoming a record system.",
+    title: "Reconstruct",
+    works: "One consequential outcome, reconstructed from its records, with an authority map and evidence gaps.",
+    owner: "The workflow owner",
+    data: "An agreed evidence set, handled under a written statement of work.",
+    expands: "Proves the method on one bounded question before any broader commitment.",
   },
   connect: {
     index: "Ring 2",
-    title: "Connect",
-    works: "Verified handoffs and health checks for myBBNC, BBNCVote, ATS tools, forms, and support.",
-    owner: "Integration owners",
-    data: "Endpoint health and public route metadata; no shareholder payloads.",
-    expands: "Makes transfers observable while the owning system remains authoritative.",
+    title: "Assess",
+    works: "A review of authority, permissions, provenance, and human oversight across workflows.",
+    owner: "Operations and risk",
+    data: "An agreed evidence set across the workflows in scope.",
+    expands: "Turns repeated gaps into a prioritized remediation roadmap.",
   },
   operate: {
     index: "Ring 3",
-    title: "Operate",
-    works: "Content drafting, review, exact-revision approval, evidence, release, and outcomes.",
-    owner: "BBNC Stewardship staff",
-    data: "Internal workflow, authority, review, risk, and audit records.",
-    expands: "Turns publication into an accountable operating practice.",
+    title: "Instrument",
+    works: "Capture the records that were missing, in an authorized environment.",
+    owner: "The client's engineering and risk teams",
+    data: "Client-controlled systems and records.",
+    expands: "Makes the next outcome explainable as it happens.",
   },
   rebuild: {
     index: "Ring 4",
-    title: "Rebuild",
-    works: "A complete BBNC.net public experience powered by signed Stewardship releases.",
-    owner: "BBNC product and communications",
-    data: "Verified public packages and licensed public assets.",
-    expands: "Replaces fragmented navigation with a governed public product.",
+    title: "Platform",
+    works: "Continuous reconstruction, delegated-authority checks, approvals, and audit trails.",
+    owner: "The client",
+    data: "Client-controlled; Victoroff never holds authority to act on a payment.",
+    expands: "Replaces after-the-fact investigation with a governed operating record.",
   },
   own: {
     index: "Ring 5",
     title: "Own",
-    works: "BBNC-controlled repositories, infrastructure, operations, recovery, and measurement.",
-    owner: "BBNC",
-    data: "All institutional assets remain in BBNC-controlled accounts.",
+    works: "Client-controlled repositories, infrastructure, operations, recovery, and measurement.",
+    owner: "The client",
+    data: "All records remain in client-controlled accounts.",
     expands: "Removes vendor dependency and sustains continuous improvement.",
   },
 } as const;
